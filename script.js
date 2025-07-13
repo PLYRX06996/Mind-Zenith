@@ -132,22 +132,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 description = '';
                 content.innerHTML = `
                     <h2 class="placeholder-title">${title}</h2>
-                    <div class="activity-cards-grid">
+                    <div class="vertical-cards-grid">
                         <div class="log-card" onclick="navigateToSection('meditation')">
                             <div class="log-icon">🧘‍♂️</div>
-                            <h3 class="card-title">Start a Meditation</h3>
+                            <div class="card-title">Start a Meditation</div>
                         </div>
                         <div class="log-card" onclick="navigateToSection('quiz')">
                             <div class="log-icon">❓</div>
-                            <h3 class="card-title">Take a Quiz</h3>
+                            <div class="card-title">Take a Quiz</div>
                         </div>
                         <div class="log-card" onclick="navigateToSection('journal')">
                             <div class="log-icon">📓</div>
-                            <h3 class="card-title">Write a New Journal</h3>
+                            <div class="card-title">Write a New Journal</div>
                         </div>
                         <div class="log-card" onclick="navigateToSection('daily-log')">
                             <div class="log-icon">📅</div>
-                            <h3 class="card-title">Take a Daily Log</h3>
+                            <div class="card-title">Take a Daily Log</div>
                         </div>
                     </div>
                 `;
@@ -248,35 +248,834 @@ function navigateToSection(sectionId) {
     // Remove any previous activity placeholders
     document.querySelectorAll('.activity-placeholder-section').forEach(el => el.remove());
 
+    // Custom logic for quiz menu
+    if (sectionId === 'quiz') {
+        // Create quiz menu section
+        let quizSection = document.getElementById('quiz');
+        if (!quizSection) {
+            quizSection = document.createElement('section');
+            quizSection.className = 'section activity-placeholder-section quiz-menu-section';
+            quizSection.id = 'quiz';
+            quizSection.innerHTML = `
+                <div class="page-header">
+                    <button class="back-button" onclick="navigateToSection('activity')">← Back to Activity Zone</button>
+                    <h2 class="page-title">Take a Quiz</h2>
+                </div>
+                <div class="quiz-menu-grid">
+                    <div class="quiz-card" data-quiz="depression">
+                        <span class="quiz-title">Depression Test</span>
+                        <button class="quiz-toggle">+</button>
+                        <div class="quiz-dropdown">
+                            <p>For people experiencing overwhelming sadness or despair, low energy, or negative self-image.</p>
+                            <a href="#" class="take-quiz-link" data-quiz="depression">Take Depression Test</a>
+                        </div>
+                    </div>
+                    <div class="quiz-card" data-quiz="anxiety">
+                        <span class="quiz-title">Anxiety Test</span>
+                        <button class="quiz-toggle">+</button>
+                        <div class="quiz-dropdown">
+                            <p>For people experiencing extreme worry or fear that affects their ability to function day-to-day.</p>
+                            <a href="#" class="take-quiz-link" data-quiz="anxiety">Take Anxiety Test</a>
+                        </div>
+                    </div>
+                    <div class="quiz-card" data-quiz="adhd">
+                        <span class="quiz-title">ADHD Test</span>
+                        <button class="quiz-toggle">+</button>
+                        <div class="quiz-dropdown">
+                            <p>For people of all ages who have trouble focusing, remembering things, completing tasks, and/or sitting still.</p>
+                            <a href="#" class="take-quiz-link" data-quiz="adhd">Take ADHD Test</a>
+                        </div>
+                    </div>
+                    <div class="quiz-card" data-quiz="bipolar">
+                        <span class="quiz-title">Bipolar Test</span>
+                        <button class="quiz-toggle">+</button>
+                        <div class="quiz-dropdown">
+                            <p>For people experiencing extreme mood swings or unusual shifts in mood and energy.</p>
+                            <a href="#" class="take-quiz-link" data-quiz="bipolar">Take Bipolar Test</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.querySelector('main').appendChild(quizSection);
+        }
+        quizSection.style.display = 'block';
+
+        // Add dropdown toggle logic
+        setTimeout(() => {
+            document.querySelectorAll('.quiz-toggle').forEach(btn => {
+                btn.onclick = function(e) {
+                    const card = this.closest('.quiz-card');
+                    card.classList.toggle('open');
+                };
+            });
+            // Hide all dropdowns initially
+            document.querySelectorAll('.quiz-dropdown').forEach(drop => {
+                drop.style.display = 'none';
+            });
+            document.querySelectorAll('.quiz-card').forEach(card => {
+                card.classList.remove('open');
+                card.querySelector('.quiz-toggle').onclick = function(e) {
+                    e.stopPropagation();
+                    const dropdown = card.querySelector('.quiz-dropdown');
+                    const isOpen = card.classList.toggle('open');
+                    dropdown.style.display = isOpen ? 'block' : 'none';
+                };
+            });
+            // Add navigation to quiz pages (to be implemented in next step)
+            document.querySelectorAll('.take-quiz-link').forEach(link => {
+                link.onclick = function(e) {
+                    e.preventDefault();
+                    const quizType = this.getAttribute('data-quiz');
+                    navigateToSection('quiz-' + quizType);
+                };
+            });
+        }, 0);
+        return;
+    }
+
+    // Depression Test Quiz Page
+    if (sectionId === 'quiz-depression') {
+        let quizSection = document.getElementById('quiz-depression');
+        if (!quizSection) {
+            quizSection = document.createElement('section');
+            quizSection.className = 'section activity-placeholder-section quiz-test-section';
+            quizSection.id = 'quiz-depression';
+            quizSection.innerHTML = `
+                <div class="page-header">
+                    <button class="back-button" onclick="navigateToSection('quiz')">← Back to Quiz Menu</button>
+                    <h2 class="page-title">Depression Test</h2>
+                </div>
+                <div class="quiz-container">
+                    <form class="quiz-form" autocomplete="off">
+                        <div class="quiz-question" data-q="1">
+                            <p>1. Little interest or pleasure in doing things</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1" value="0">Not at all</label>
+                                <label><input type="radio" name="q1" value="1">Several days</label>
+                                <label><input type="radio" name="q1" value="2">More than half the days</label>
+                                <label><input type="radio" name="q1" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="2">
+                            <p>2. Feeling down, depressed, or hopeless</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q2" value="0">Not at all</label>
+                                <label><input type="radio" name="q2" value="1">Several days</label>
+                                <label><input type="radio" name="q2" value="2">More than half the days</label>
+                                <label><input type="radio" name="q2" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="3">
+                            <p>3. Trouble falling or staying asleep, or sleeping too much</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q3" value="0">Not at all</label>
+                                <label><input type="radio" name="q3" value="1">Several days</label>
+                                <label><input type="radio" name="q3" value="2">More than half the days</label>
+                                <label><input type="radio" name="q3" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="4">
+                            <p>4. Feeling tired or having little energy</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q4" value="0">Not at all</label>
+                                <label><input type="radio" name="q4" value="1">Several days</label>
+                                <label><input type="radio" name="q4" value="2">More than half the days</label>
+                                <label><input type="radio" name="q4" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="5">
+                            <p>5. Poor appetite or overeating</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q5" value="0">Not at all</label>
+                                <label><input type="radio" name="q5" value="1">Several days</label>
+                                <label><input type="radio" name="q5" value="2">More than half the days</label>
+                                <label><input type="radio" name="q5" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="6">
+                            <p>6. Feeling bad about yourself - or that you are a failure or have let yourself or your family down</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q6" value="0">Not at all</label>
+                                <label><input type="radio" name="q6" value="1">Several days</label>
+                                <label><input type="radio" name="q6" value="2">More than half the days</label>
+                                <label><input type="radio" name="q6" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="7">
+                            <p>7. Trouble concentrating on things, such as reading the newspaper or watching television</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q7" value="0">Not at all</label>
+                                <label><input type="radio" name="q7" value="1">Several days</label>
+                                <label><input type="radio" name="q7" value="2">More than half the days</label>
+                                <label><input type="radio" name="q7" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="8">
+                            <p>8. Moving or speaking so slowly that other people could have noticed<br>Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q8" value="0">Not at all</label>
+                                <label><input type="radio" name="q8" value="1">Several days</label>
+                                <label><input type="radio" name="q8" value="2">More than half the days</label>
+                                <label><input type="radio" name="q8" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="9">
+                            <p>9. Thoughts that you would be better off dead, or of hurting yourself</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q9" value="0">Not at all</label>
+                                <label><input type="radio" name="q9" value="1">Several days</label>
+                                <label><input type="radio" name="q9" value="2">More than half the days</label>
+                                <label><input type="radio" name="q9" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="10">
+                            <p>10. If you checked off any problems, how difficult have these problems made it for you at work, home, or with other people?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q10" value="0">Not difficult at all</label>
+                                <label><input type="radio" name="q10" value="1">Somewhat difficult</label>
+                                <label><input type="radio" name="q10" value="2">Very difficult</label>
+                                <label><input type="radio" name="q10" value="3">Extremely difficult</label>
+                            </div>
+                        </div>
+                        <div class="quiz-error" style="display:none;"><strong>Error:</strong> This field is required.</div>
+                        <div class="crisis-message" style="display:none;">
+                            If you need immediate help, you can reach the Suicide & Crisis Lifeline by calling or texting <strong>988</strong> or using the chat box at <a href="https://988lifeline.org" target="_blank">988lifeline.org</a>. You can also <strong>text “MHA” to 741-741</strong> to reach the Crisis Text Line. <a href="https://warmline.org" target="_blank">Warmlines</a> are an excellent place for non-crisis support.
+                        </div>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            `;
+            document.querySelector('main').appendChild(quizSection);
+        }
+        quizSection.style.display = 'block';
+
+        // Quiz validation and crisis message logic
+        setTimeout(() => {
+            const form = quizSection.querySelector('.quiz-form');
+            const errorDivs = quizSection.querySelectorAll('.quiz-error');
+            const crisisDiv = quizSection.querySelector('.crisis-message');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                let valid = true;
+                // Remove all previous errors
+                quizSection.querySelectorAll('.quiz-error').forEach(el => el.style.display = 'none');
+                crisisDiv.style.display = 'none';
+                // Validate each question
+                for (let i = 1; i <= 10; i++) {
+                    const q = form.querySelector(`[name='q${i}']:checked`);
+                    if (!q) {
+                        valid = false;
+                        const questionDiv = form.querySelector(`.quiz-question[data-q='${i}']`);
+                        let error = questionDiv.querySelector('.quiz-error');
+                        if (!error) {
+                            error = document.createElement('div');
+                            error.className = 'quiz-error';
+                            error.innerHTML = '<strong>Error:</strong> This field is required.';
+                            questionDiv.appendChild(error);
+                        }
+                        error.style.display = 'block';
+                    }
+                }
+                // Special logic for Q9
+                const q9 = form.querySelector("[name='q9']:checked");
+                if (q9 && (q9.value === '1' || q9.value === '2' || q9.value === '3')) {
+                    const q9Div = form.querySelector(".quiz-question[data-q='9']");
+                    crisisDiv.style.display = 'block';
+                    q9Div.appendChild(crisisDiv);
+                }
+                if (valid) {
+                    // For now, do nothing on valid submit
+                }
+            };
+            // Option selection styling
+            form.querySelectorAll('.quiz-options input[type="radio"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    form.querySelectorAll('.quiz-options label').forEach(lab => lab.classList.remove('selected'));
+                    if (this.checked) {
+                        this.parentElement.classList.add('selected');
+                    }
+                });
+            });
+        }, 0);
+        return;
+    }
+    // Anxiety Test Quiz Page
+    if (sectionId === 'quiz-anxiety') {
+        let quizSection = document.getElementById('quiz-anxiety');
+        if (!quizSection) {
+            quizSection = document.createElement('section');
+            quizSection.className = 'section activity-placeholder-section quiz-test-section';
+            quizSection.id = 'quiz-anxiety';
+            quizSection.innerHTML = `
+                <div class="page-header">
+                    <button class="back-button" onclick="navigateToSection('quiz')">← Back to Quiz Menu</button>
+                    <h2 class="page-title">Anxiety Test</h2>
+                </div>
+                <div class="quiz-container">
+                    <form class="quiz-form" autocomplete="off">
+                        <div class="quiz-question" data-q="1">
+                            <p>1. Feeling nervous, anxious, or on edge</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1" value="0">Not at all</label>
+                                <label><input type="radio" name="q1" value="1">Several days</label>
+                                <label><input type="radio" name="q1" value="2">More than half the days</label>
+                                <label><input type="radio" name="q1" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="2">
+                            <p>2. Not being able to stop or control worrying</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q2" value="0">Not at all</label>
+                                <label><input type="radio" name="q2" value="1">Several days</label>
+                                <label><input type="radio" name="q2" value="2">More than half the days</label>
+                                <label><input type="radio" name="q2" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="3">
+                            <p>3. Worrying too much about different things</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q3" value="0">Not at all</label>
+                                <label><input type="radio" name="q3" value="1">Several days</label>
+                                <label><input type="radio" name="q3" value="2">More than half the days</label>
+                                <label><input type="radio" name="q3" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="4">
+                            <p>4. Trouble relaxing</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q4" value="0">Not at all</label>
+                                <label><input type="radio" name="q4" value="1">Several days</label>
+                                <label><input type="radio" name="q4" value="2">More than half the days</label>
+                                <label><input type="radio" name="q4" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="5">
+                            <p>5. Being so restless that it is hard to sit still</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q5" value="0">Not at all</label>
+                                <label><input type="radio" name="q5" value="1">Several days</label>
+                                <label><input type="radio" name="q5" value="2">More than half the days</label>
+                                <label><input type="radio" name="q5" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="6">
+                            <p>6. Becoming easily annoyed or irritable</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q6" value="0">Not at all</label>
+                                <label><input type="radio" name="q6" value="1">Several days</label>
+                                <label><input type="radio" name="q6" value="2">More than half the days</label>
+                                <label><input type="radio" name="q6" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="7">
+                            <p>7. Feeling afraid, as if something awful might happen</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q7" value="0">Not at all</label>
+                                <label><input type="radio" name="q7" value="1">Several days</label>
+                                <label><input type="radio" name="q7" value="2">More than half the days</label>
+                                <label><input type="radio" name="q7" value="3">Nearly every day</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            `;
+            document.querySelector('main').appendChild(quizSection);
+        }
+        quizSection.style.display = 'block';
+
+        // Quiz validation logic
+        setTimeout(() => {
+            const form = quizSection.querySelector('.quiz-form');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                let valid = true;
+                // Remove all previous errors
+                quizSection.querySelectorAll('.quiz-error').forEach(el => el.style.display = 'none');
+                // Validate each question
+                for (let i = 1; i <= 7; i++) {
+                    const q = form.querySelector(`[name='q${i}']:checked`);
+                    if (!q) {
+                        valid = false;
+                        const questionDiv = form.querySelector(`.quiz-question[data-q='${i}']`);
+                        let error = questionDiv.querySelector('.quiz-error');
+                        if (!error) {
+                            error = document.createElement('div');
+                            error.className = 'quiz-error';
+                            error.innerHTML = '<strong>Error:</strong> This field is required.';
+                            questionDiv.appendChild(error);
+                        }
+                        error.style.display = 'block';
+                    }
+                }
+                if (valid) {
+                    // For now, do nothing on valid submit
+                }
+            };
+            // Option selection styling
+            form.querySelectorAll('.quiz-options input[type="radio"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    form.querySelectorAll('.quiz-options label').forEach(lab => lab.classList.remove('selected'));
+                    if (this.checked) {
+                        this.parentElement.classList.add('selected');
+                    }
+                });
+            });
+        }, 0);
+        return;
+    }
+    // ADHD Test Quiz Page
+    if (sectionId === 'quiz-adhd') {
+        let quizSection = document.getElementById('quiz-adhd');
+        if (!quizSection) {
+            quizSection = document.createElement('section');
+            quizSection.className = 'section activity-placeholder-section quiz-test-section';
+            quizSection.id = 'quiz-adhd';
+            quizSection.innerHTML = `
+                <div class="page-header">
+                    <button class="back-button" onclick="navigateToSection('quiz')">← Back to Quiz Menu</button>
+                    <h2 class="page-title">ADHD Test</h2>
+                </div>
+                <div class="quiz-container">
+                    <form class="quiz-form" autocomplete="off">
+                        <div class="quiz-question" data-q="1">
+                            <p>1. How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1" value="0">Never</label>
+                                <label><input type="radio" name="q1" value="1">Rarely</label>
+                                <label><input type="radio" name="q1" value="2">Sometimes</label>
+                                <label><input type="radio" name="q1" value="3">Often</label>
+                                <label><input type="radio" name="q1" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="2">
+                            <p>2. How often do you have difficulty getting things in order when you have to do a task that requires organization?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q2" value="0">Never</label>
+                                <label><input type="radio" name="q2" value="1">Rarely</label>
+                                <label><input type="radio" name="q2" value="2">Sometimes</label>
+                                <label><input type="radio" name="q2" value="3">Often</label>
+                                <label><input type="radio" name="q2" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="3">
+                            <p>3. How often do you have problems remembering appointments or obligations?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q3" value="0">Never</label>
+                                <label><input type="radio" name="q3" value="1">Rarely</label>
+                                <label><input type="radio" name="q3" value="2">Sometimes</label>
+                                <label><input type="radio" name="q3" value="3">Often</label>
+                                <label><input type="radio" name="q3" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="4">
+                            <p>4. When you have a task that requires a lot of thought, how often do you avoid or delay getting started?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q4" value="0">Never</label>
+                                <label><input type="radio" name="q4" value="1">Rarely</label>
+                                <label><input type="radio" name="q4" value="2">Sometimes</label>
+                                <label><input type="radio" name="q4" value="3">Often</label>
+                                <label><input type="radio" name="q4" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="5">
+                            <p>5. How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q5" value="0">Never</label>
+                                <label><input type="radio" name="q5" value="1">Rarely</label>
+                                <label><input type="radio" name="q5" value="2">Sometimes</label>
+                                <label><input type="radio" name="q5" value="3">Often</label>
+                                <label><input type="radio" name="q5" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="6">
+                            <p>6. How often do you feel overly active and compelled to do things, like you were driven by a motor?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q6" value="0">Never</label>
+                                <label><input type="radio" name="q6" value="1">Rarely</label>
+                                <label><input type="radio" name="q6" value="2">Sometimes</label>
+                                <label><input type="radio" name="q6" value="3">Often</label>
+                                <label><input type="radio" name="q6" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="7">
+                            <p>7. How often do you make careless mistakes when you have to work on a boring or difficult project?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q7" value="0">Never</label>
+                                <label><input type="radio" name="q7" value="1">Rarely</label>
+                                <label><input type="radio" name="q7" value="2">Sometimes</label>
+                                <label><input type="radio" name="q7" value="3">Often</label>
+                                <label><input type="radio" name="q7" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="8">
+                            <p>8. How often do you have difficulty keeping your attention when you are doing boring or repetitive work?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q8" value="0">Never</label>
+                                <label><input type="radio" name="q8" value="1">Rarely</label>
+                                <label><input type="radio" name="q8" value="2">Sometimes</label>
+                                <label><input type="radio" name="q8" value="3">Often</label>
+                                <label><input type="radio" name="q8" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="9">
+                            <p>9. How often do you have difficulty concentrating on what people say to you, even when they are speaking to you directly?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q9" value="0">Never</label>
+                                <label><input type="radio" name="q9" value="1">Rarely</label>
+                                <label><input type="radio" name="q9" value="2">Sometimes</label>
+                                <label><input type="radio" name="q9" value="3">Often</label>
+                                <label><input type="radio" name="q9" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="10">
+                            <p>10. How often do you misplace or have difficulty finding things at home or at work?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q10" value="0">Never</label>
+                                <label><input type="radio" name="q10" value="1">Rarely</label>
+                                <label><input type="radio" name="q10" value="2">Sometimes</label>
+                                <label><input type="radio" name="q10" value="3">Often</label>
+                                <label><input type="radio" name="q10" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="11">
+                            <p>11. How often are you distracted by activity or noise around you?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q11" value="0">Never</label>
+                                <label><input type="radio" name="q11" value="1">Rarely</label>
+                                <label><input type="radio" name="q11" value="2">Sometimes</label>
+                                <label><input type="radio" name="q11" value="3">Often</label>
+                                <label><input type="radio" name="q11" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="12">
+                            <p>12. How often do you leave your seat in meetings or other situations in which you are expected to remain seated?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q12" value="0">Never</label>
+                                <label><input type="radio" name="q12" value="1">Rarely</label>
+                                <label><input type="radio" name="q12" value="2">Sometimes</label>
+                                <label><input type="radio" name="q12" value="3">Often</label>
+                                <label><input type="radio" name="q12" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="13">
+                            <p>13. How often do you feel restless or fidgety?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q13" value="0">Never</label>
+                                <label><input type="radio" name="q13" value="1">Rarely</label>
+                                <label><input type="radio" name="q13" value="2">Sometimes</label>
+                                <label><input type="radio" name="q13" value="3">Often</label>
+                                <label><input type="radio" name="q13" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="14">
+                            <p>14. How often do you have difficulty unwinding and relaxing when you have time to yourself?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q14" value="0">Never</label>
+                                <label><input type="radio" name="q14" value="1">Rarely</label>
+                                <label><input type="radio" name="q14" value="2">Sometimes</label>
+                                <label><input type="radio" name="q14" value="3">Often</label>
+                                <label><input type="radio" name="q14" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="15">
+                            <p>15. How often do you find yourself talking too much when you are in social situations?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q15" value="0">Never</label>
+                                <label><input type="radio" name="q15" value="1">Rarely</label>
+                                <label><input type="radio" name="q15" value="2">Sometimes</label>
+                                <label><input type="radio" name="q15" value="3">Often</label>
+                                <label><input type="radio" name="q15" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="16">
+                            <p>16. When you’re in a conversation, how often do you find yourself finishing the sentences of the people you are talking to, before they can finish them themselves?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q16" value="0">Never</label>
+                                <label><input type="radio" name="q16" value="1">Rarely</label>
+                                <label><input type="radio" name="q16" value="2">Sometimes</label>
+                                <label><input type="radio" name="q16" value="3">Often</label>
+                                <label><input type="radio" name="q16" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="17">
+                            <p>17. How often do you have difficulty waiting your turn in situations when turn taking is required?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q17" value="0">Never</label>
+                                <label><input type="radio" name="q17" value="1">Rarely</label>
+                                <label><input type="radio" name="q17" value="2">Sometimes</label>
+                                <label><input type="radio" name="q17" value="3">Often</label>
+                                <label><input type="radio" name="q17" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="18">
+                            <p>18. How often do you interrupt others when they are busy?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q18" value="0">Never</label>
+                                <label><input type="radio" name="q18" value="1">Rarely</label>
+                                <label><input type="radio" name="q18" value="2">Sometimes</label>
+                                <label><input type="radio" name="q18" value="3">Often</label>
+                                <label><input type="radio" name="q18" value="4">Very Often</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            `;
+            document.querySelector('main').appendChild(quizSection);
+        }
+        quizSection.style.display = 'block';
+
+        // Quiz validation logic
+        setTimeout(() => {
+            const form = quizSection.querySelector('.quiz-form');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                let valid = true;
+                // Remove all previous errors
+                quizSection.querySelectorAll('.quiz-error').forEach(el => el.style.display = 'none');
+                // Validate each question
+                for (let i = 1; i <= 18; i++) {
+                    const q = form.querySelector(`[name='q${i}']:checked`);
+                    if (!q) {
+                        valid = false;
+                        const questionDiv = form.querySelector(`.quiz-question[data-q='${i}']`);
+                        let error = questionDiv.querySelector('.quiz-error');
+                        if (!error) {
+                            error = document.createElement('div');
+                            error.className = 'quiz-error';
+                            error.innerHTML = '<strong>Error:</strong> This field is required.';
+                            questionDiv.appendChild(error);
+                        }
+                        error.style.display = 'block';
+                    }
+                }
+                if (valid) {
+                    // For now, do nothing on valid submit
+                }
+            };
+            // Option selection styling
+            form.querySelectorAll('.quiz-options input[type="radio"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    form.querySelectorAll('.quiz-options label').forEach(lab => lab.classList.remove('selected'));
+                    if (this.checked) {
+                        this.parentElement.classList.add('selected');
+                    }
+                });
+            });
+        }, 0);
+        return;
+    }
+    // Bipolar Test Quiz Page (was Therapy Test)
+    if (sectionId === 'quiz-therapy' || sectionId === 'quiz-bipolar') {
+        let quizSection = document.getElementById('quiz-bipolar');
+        if (!quizSection) {
+            quizSection = document.createElement('section');
+            quizSection.className = 'section activity-placeholder-section quiz-test-section';
+            quizSection.id = 'quiz-bipolar';
+            quizSection.innerHTML = `
+                <div class="page-header">
+                    <button class="back-button" onclick="navigateToSection('quiz')">← Back to Quiz Menu</button>
+                    <h2 class="page-title">Bipolar Test</h2>
+                </div>
+                <div class="quiz-container">
+                    <form class="quiz-form" autocomplete="off">
+                        <div class="quiz-question" data-q="1a">
+                            <p>1. Has there ever been a period of time when you were not your usual self and...<br>You felt so good or hyper that other people thought you were not your normal self or were so hyper that you got into trouble?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1a" value="yes">Yes</label>
+                                <label><input type="radio" name="q1a" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1b">
+                            <p>You were so irritable that you shouted at people or started fights or arguments?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1b" value="yes">Yes</label>
+                                <label><input type="radio" name="q1b" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1c">
+                            <p>You felt much more self-confident than usual?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1c" value="yes">Yes</label>
+                                <label><input type="radio" name="q1c" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1d">
+                            <p>You got much less sleep than usual and found you didn’t really miss it?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1d" value="yes">Yes</label>
+                                <label><input type="radio" name="q1d" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1e">
+                            <p>You were much more talkative or spoke much faster than usual?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1e" value="yes">Yes</label>
+                                <label><input type="radio" name="q1e" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1f">
+                            <p>Thoughts raced through your head or you couldn’t slow your mind down?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1f" value="yes">Yes</label>
+                                <label><input type="radio" name="q1f" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1g">
+                            <p>You were so easily distracted by things around you that you had trouble concentrating or staying on track?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1g" value="yes">Yes</label>
+                                <label><input type="radio" name="q1g" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1h">
+                            <p>You had much more energy than usual?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1h" value="yes">Yes</label>
+                                <label><input type="radio" name="q1h" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1i">
+                            <p>You were much more social or outgoing than usual, for example, you telephoned friends in the middle of the night?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1i" value="yes">Yes</label>
+                                <label><input type="radio" name="q1i" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1j">
+                            <p>You were much more interested in sex than usual?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1j" value="yes">Yes</label>
+                                <label><input type="radio" name="q1j" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1k">
+                            <p>You did things that were unusual for you or that other people might have thought were excessive, foolish, or risky?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1k" value="yes">Yes</label>
+                                <label><input type="radio" name="q1k" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="1l">
+                            <p>Spending money got you or your family into trouble?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q1l" value="yes">Yes</label>
+                                <label><input type="radio" name="q1l" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="2">
+                            <p>2. If you checked YES to more than one of the above, have several of these ever happened during the same period of time?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q2" value="yes">Yes</label>
+                                <label><input type="radio" name="q2" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="3">
+                            <p>3. How much of a problem did any of these cause you?<br>Like being unable to work; having family, money or legal troubles; getting into arguments or fights?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q3" value="0">No Problem</label>
+                                <label><input type="radio" name="q3" value="1">Minor Problem</label>
+                                <label><input type="radio" name="q3" value="2">Moderate Problem</label>
+                                <label><input type="radio" name="q3" value="3">Serious Problem</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="4">
+                            <p>4. Have any of your blood relatives had manic-depressive illness or bipolar disorder?<br>i.e. Children, siblings, parents, grandparents, aunts, and uncles.</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q4" value="yes">Yes</label>
+                                <label><input type="radio" name="q4" value="no">No</label>
+                            </div>
+                        </div>
+                        <div class="quiz-question" data-q="5">
+                            <p>5. Has a health professional ever told you that you have manic-depressive illness or bipolar disorder?</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="q5" value="yes">Yes</label>
+                                <label><input type="radio" name="q5" value="no">No</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            `;
+            document.querySelector('main').appendChild(quizSection);
+        }
+        quizSection.style.display = 'block';
+
+        // Quiz validation logic
+        setTimeout(() => {
+            const form = quizSection.querySelector('.quiz-form');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                let valid = true;
+                // Remove all previous errors
+                quizSection.querySelectorAll('.quiz-error').forEach(el => el.style.display = 'none');
+                // Validate each question
+                const qNames = [
+                    'q1a','q1b','q1c','q1d','q1e','q1f','q1g','q1h','q1i','q1j','q1k','q1l','q2','q3','q4','q5'
+                ];
+                for (const name of qNames) {
+                    const q = form.querySelector(`[name='${name}']:checked`);
+                    if (!q) {
+                        valid = false;
+                        const questionDiv = form.querySelector(`.quiz-question[data-q='${name.replace('q','')}']`);
+                        let error = questionDiv.querySelector('.quiz-error');
+                        if (!error) {
+                            error = document.createElement('div');
+                            error.className = 'quiz-error';
+                            error.innerHTML = '<strong>Error:</strong> This field is required.';
+                            questionDiv.appendChild(error);
+                        }
+                        error.style.display = 'block';
+                    }
+                }
+                if (valid) {
+                    // For now, do nothing on valid submit
+                }
+            };
+            // Option selection styling
+            form.querySelectorAll('.quiz-options input[type="radio"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    form.querySelectorAll('.quiz-options label').forEach(lab => lab.classList.remove('selected'));
+                    if (this.checked) {
+                        this.parentElement.classList.add('selected');
+                    }
+                });
+            });
+        }, 0);
+        return;
+    }
+
     // Show the target section
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
         targetSection.style.display = 'block';
     } else if (["meditation", "quiz", "journal", "daily-log"].includes(sectionId)) {
-        // Create a placeholder section for the activity
-        const activitySection = document.createElement('section');
-        activitySection.className = 'section activity-placeholder-section';
-        activitySection.id = sectionId;
-        activitySection.innerHTML = `
-            <div class="page-header">
-                <button class="back-button" onclick="navigateToSection('activity')">← Back to Activity Zone</button>
-                <h2 class="page-title">${
-                    sectionId === 'meditation' ? 'Start a Meditation' :
-                    sectionId === 'quiz' ? 'Take a Quiz' :
-                    sectionId === 'journal' ? 'Write a New Journal' :
-                    sectionId === 'daily-log' ? 'Take a Daily Log' : ''
-                }</h2>
-            </div>
-            <div class="page-content">
-                <div class="placeholder-content">
-                    <h3 class="placeholder-title">This feature is coming soon!</h3>
+        // Create a placeholder section for the activity (except quiz, which is handled above)
+        if (sectionId !== 'quiz') {
+            const activitySection = document.createElement('section');
+            activitySection.className = 'section activity-placeholder-section';
+            activitySection.id = sectionId;
+            activitySection.innerHTML = `
+                <div class="page-header">
+                    <button class="back-button" onclick="navigateToSection('activity')">← Back to Activity Zone</button>
+                    <h2 class="page-title">${
+                        sectionId === 'meditation' ? 'Start a Meditation' :
+                        sectionId === 'quiz' ? 'Take a Quiz' :
+                        sectionId === 'journal' ? 'Write a New Journal' :
+                        sectionId === 'daily-log' ? 'Take a Daily Log' : ''
+                    }</h2>
                 </div>
-            </div>
-        `;
-        document.querySelector('main').appendChild(activitySection);
-        activitySection.style.display = 'block';
+                <div class="page-content">
+                    <div class="placeholder-content">
+                        <h3 class="placeholder-title">This feature is coming soon!</h3>
+                    </div>
+                </div>
+            `;
+            document.querySelector('main').appendChild(activitySection);
+            activitySection.style.display = 'block';
+        }
     }
-    
     // Hide landing container when navigating to dashboard/activity sections
     const landingContainer = document.querySelector('.landing-container');
     if (landingContainer) {
