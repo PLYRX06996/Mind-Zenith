@@ -233,7 +233,7 @@ main::before {
 }
 
 .hero-section {
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,7 +243,10 @@ main::before {
     backdrop-filter: blur(10px);
     border-radius: 20px;
     margin: 2rem;
+    margin-bottom: 4rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
 }
 
 .hero-content {
@@ -308,6 +311,8 @@ main::before {
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
 }
 
 .section-content {
