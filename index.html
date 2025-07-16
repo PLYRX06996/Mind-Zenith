@@ -3,402 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindQuest - Gamified Mental Health Tracker</title>
+    <title>Mind Zenith - New Start</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Handwritten/Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="logo-container">
-            <img src="mzlogo.png" alt="MindZenithLogo" class="circular-logo" onclick="openModal(this)">
+    <header class="main-header">
+        <div class="header-logo">
+            <a href="#" id="logo-link"><img src="mzlogo.png" alt="Mind Zenith Logo" class="clickable-img logo-img font-pacifico"></a>
         </div>
-        
         <div class="header-right">
-            <div class="hamburger-menu" id="hamburger-menu">
-                <div class="hamburger-line"></div>
-                <div class="hamburger-line"></div>
-                <div class="hamburger-line"></div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link active">Home</a></li>
+                    <li><a href="#" class="nav-link">Dashboard</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">Activity Zone</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item">Meditation</a></li>
+                            <li><a href="#" class="dropdown-item">Quiz</a></li>
+                            <li><a href="#" class="dropdown-item">Journal</a></li>
+                            <li><a href="#" class="dropdown-item">Daily Log</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="profile-icon" id="profile-icon">
+                <img src="Avatars/thor.png" alt="Profile Icon" class="profile-avatar-img clickable-img" id="header-profile-avatar">
             </div>
-            
-        <div class="profile-icon" id="profile-icon">👤</div>
+        </div>
+        <div class="profile-dropdown" id="profile-dropdown">
+            <div class="profile-header">
+                <img src="Avatars/thor.png" alt="Profile Avatar" id="dropdown-profile-avatar">
+                <h3>Welcome Back,<br><span id="dropdown-display-name">MindZenithUser</span>!</h3>
+                <p>Level 5 Explorer</p>
+            </div>
+            <ul>
+                <li><a href="#">Profile Settings</a></li>
+                <li><a href="#">Achievements</a></li>
+                <li><a href="#">Store</a></li>
+                <li><a href="#">Log Out</a></li>
+            </ul>
         </div>
     </header>
-
-    <nav class="mobile-nav" id="mobile-nav">
-        <ul>
-            <li><a href="#home" class="nav-link active">Home</a></li>
-            <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
-            <li><a href="#activity" class="nav-link">Activity Zone</a></li>
-        </ul>
-    </nav>
-
-    <div class="nav-overlay" id="nav-overlay"></div>
-
-    <!-- Image Modal -->
-    <div class="image-modal" id="image-modal">
-        <div class="modal-content">
-            <span class="close-modal" id="close-modal">&times;</span>
-            <img src="" alt="Modal Image" id="modal-image">
-        </div>
-    </div>
-
-    <div class="profile-dropdown" id="profile-dropdown">
-        <div class="profile-header">
-            <div class="profile-avatar">👤</div>
-            <h3>Welcome Back!</h3>
-            <p>Level 5 Explorer</p>
-        </div>
-        <ul>
-            <li><a href="#">Profile Settings</a></li>
-            <li><a href="#">Achievements</a></li>
-            <li><a href="#">Log Out</a></li>
-        </ul>
-    </div>
-
     <main>
-        <div class="landing-container">
-            <div class="hero-section">
-                <div class="hero-content">
-                    <h1 class="hero-headline">Mind Zenith</h1>
-                    <p class="hero-subheadline">Elevate your mind. Gamify your wellness.</p>
-                    <p class="hero-description">A playful, science‑backed journey to better mental health. Log your moods, complete daily challenges, earn XP, and unlock badges—all in one app.</p>
-                    <button class="cta-button" onclick="scrollToSection('features-section')">Get Started 🚀</button>
+        <section class="hero-section">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Mind Zenith</h1>
+                <h2 class="hero-subtitle">Elevate your mind. Gamify your wellness.</h2>
+                <p class="hero-desc">A playful, science-backed journey to better mental health. Log your moods, complete daily challenges, earn XP, and unlock badges—all in one app.</p>
+                <a href="#" class="hero-btn">Get Started <span class="emoji">🚀</span></a>
+            </div>
+        </section>
+        <section class="why-mental-health">
+            <h2 class="wmh-title">Why Mental Health Matters</h2>
+            <blockquote class="wmh-quote">
+                "Your mental health is a crucial part of who you are. It influences your actions, feelings, thoughts, and how you interact with others."
+            </blockquote>
+            <div class="wmh-cards">
+                <div class="wmh-card">
+                    Every one of us carries an inner world of thoughts, feelings, and habits.
+                </div>
+                <div class="wmh-card">
+                    When we pay attention to that world—track our moods, reflect on our wins and struggles, and build tiny daily habits—we gain:
+                    <ul class="wmh-list">
+                        <li>✨ Clarity over our emotional patterns</li>
+                        <li>✨ Resilience in the face of stress</li>
+                        <li>✨ Balance between mind and body</li>
+                        <li>✨ Joy in small, consistent wins</li>
+                    </ul>
+                </div>
+                <div class="wmh-card">
+                    At Mind Zenith, we believe self-care shouldn't feel like a chore. That's why we turn reflection into play.
                 </div>
             </div>
-
-            <div id="mental-health-placeholder">
-                <div class="section-content">
-                    <h2 class="section-title">Why Mental Health Matters</h2>
-                    <div class="quote-block">
-                        <p class="quote-text">“Your mental health is a crucial part of who you are. It influences your actions, feelings, thoughts, and how you interact with others.”<br><span style="font-size:1rem;opacity:0.7;">— Adobe Express</span></p>
-                    </div>
-                    <div class="content-blocks">
-                        <div class="content-block">
-                            <p class="content-text">Every one of us carries an inner world of thoughts, feelings, and habits.</p>
-                        </div>
-                        <div class="content-block">
-                            <p class="content-text">When we pay attention to that world—track our moods, reflect on our wins and struggles, and build tiny daily habits—we gain:</p>
-                            <ul class="benefits-list">
-                                <li>Clarity over our emotional patterns</li>
-                                <li>Resilience in the face of stress</li>
-                                <li>Balance between mind and body</li>
-                                <li>Joy in small, consistent wins</li>
-                            </ul>
-                        </div>
-                        <div class="content-block">
-                            <p class="content-text">At Mind Zenith, we believe self‑care shouldn’t feel like a chore. That’s why we turn reflection into play.</p>
-                        </div>
-                    </div>
-                </div>
+        </section>
+        <section class="community-wall-section">
+            <div class="community-wall-card">
+                <h2 class="community-wall-title">Community Wall</h2>
+                <p class="community-wall-desc">
+                    Empowering each other, sharing wins, and spreading motivation! The Community Wall is where you can showcase your achievements, inspire others, and celebrate progress together. Enable your badges to be visible and join the movement of positive change!
+                </p>
+                <a href="#" class="community-wall-btn">Enter Community Wall</a>
             </div>
-
-            <section id="features-section" class="features-section">
-                <h2 class="section-title">Key Features</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <span class="feature-icon">📝</span>
-                        <h3 class="feature-title">Daily Logs & Guided Journaling</h3>
-                        <p class="feature-description">Track mood, sleep, gratitude, and more with simple prompts.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <span class="feature-icon">📊</span>
-                        <h3 class="feature-title">Habit & Streak Tracker</h3>
-                        <p class="feature-description">Build micro‑habits (meditation, walks, screen breaks). Stay accountable with gentle reminders.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <span class="feature-icon">🏆</span>
-                        <h3 class="feature-title">Real‑Time Challenge Rooms</h3>
-                        <p class="feature-description">Join public or private "30‑Day Mindful" challenges—cheer each other on in real time.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <span class="feature-icon">📈</span>
-                        <h3 class="feature-title">Interactive Progress Dashboard</h3>
-                        <p class="feature-description">Beautiful charts and trend lines show your emotional highs, lows, and habit streaks.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <span class="feature-icon">⭐</span>
-                        <h3 class="feature-title">XP & Leveling System</h3>
-                        <p class="feature-description">Earn points for every log, journal entry, and completed challenge. Rise from Beginner all the way to Zenither.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <span class="feature-icon">🏅</span>
-                        <h3 class="feature-title">Achievements & Badges</h3>
-                        <p class="feature-description">Hit streak milestones, complete journaling milestones, or finish gratitude sprints—and collect badges to show off.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <span class="feature-icon">🎨</span>
-                        <h3 class="feature-title">Customization & Rewards</h3>
-                        <p class="feature-description">Spend points on avatar gear, new color themes, or adopt a virtual pet that "levels up" with you.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <span class="feature-icon">👥</span>
-                        <h3 class="feature-title">Community & Support</h3>
-                        <p class="feature-description">Share reflections, send encouragement, and join themed discussion rooms.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="how-it-works-section">
-                <h2 class="section-title">How It Works</h2>
-                <div class="steps-container">
-                    <div class="step-card">
-                        <div class="step-number">1</div>
-                        <h3 class="step-title">Sign Up & Set Goals</h3>
-                        <p class="step-description">Choose your 3 core habits and mood tags.</p>
-                    </div>
-                    
-                    <div class="step-card">
-                        <div class="step-number">2</div>
-                        <h3 class="step-title">Log In Daily</h3>
-                        <p class="step-description">Fill out your mood, journal, and habit checklist.</p>
-                    </div>
-                    
-                    <div class="step-card">
-                        <div class="step-number">3</div>
-                        <h3 class="step-title">Earn & Spend XP</h3>
-                        <p class="step-description">Level up, unlock new rewards, and customize your space.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="quote-section">
-                <h2 class="section-title">Daily Inspiration</h2>
-                <div class="quote-container">
-                    <div class="quote-item">
-                        <img src="quote1.png" alt="Quote 1" class="quote-image" onclick="openModal(this)">
-                    </div>
-                    <div class="quote-item">
-                        <img src="quote2.png" alt="Quote 2" class="quote-image" onclick="openModal(this)">
-                    </div>
-                    <div class="quote-item">
-                        <img src="quote3.png" alt="Quote 3" class="quote-image" onclick="openModal(this)">
-                    </div>
-                    <div class="quote-item">
-                        <img src="quote4.png" alt="Quote 4" class="quote-image" onclick="openModal(this)">
-                    </div>
-                    <div class="quote-item">
-                        <img src="quote5.png" alt="Quote 5" class="quote-image" onclick="openModal(this)">
-                    </div>
-                    <div class="quote-item">
-                        <img src="quote6.png" alt="Quote 6" class="quote-image" onclick="openModal(this)">
-                    </div>
-                    <div class="quote-item">
-                        <img src="quote7.jpeg" alt="Quote 7" class="quote-image" onclick="openModal(this)">
-                    </div>
-                    <div class="quote-item">
-                        <img src="quote8.jpeg" alt="Quote 8" class="quote-image" onclick="openModal(this)">
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Dashboard Section -->
-        <section id="dashboard" class="section dashboard-section">
+        </section>
+        <section class="dashboard-section" style="display:none;">
             <h2 class="dashboard-title">Your Wellness Journey Overview</h2>
-            
-            <div class="dashboard-grid">
-                <!-- Streak Container -->
-                <div class="streak-container">
-                    <div class="streak-card">
-                        <h3 class="card-title">Current Day Streak</h3>
-                        <div class="fire-ring-container">
-                            <div class="fire-ring">
-                                <div class="fire-circle active" data-day="1">🔥</div>
-                                <div class="fire-circle active" data-day="2">🔥</div>
-                                <div class="fire-circle active" data-day="3">🔥</div>
-                                <div class="fire-circle active" data-day="4">🔥</div>
-                                <div class="fire-circle active" data-day="5">🔥</div>
-                                <div class="fire-circle active" data-day="6">🔥</div>
-                                <div class="fire-circle" data-day="7">🔥</div>
-                            </div>
-                            <div class="streak-info">
-                                <span class="streak-number">6</span>
-                                <span class="streak-text">days</span>
-                            </div>
-                        </div>
-                        <p class="streak-description">Current Week's Streak</p>
+            <div class="dashboard-cards">
+                <div class="dashboard-card streak-card">
+                    <div class="streak-title">Current Day Streak</div>
+                    <div class="streak-icons">
+                        <span class="streak-fire active">🔥</span>
+                        <span class="streak-fire active">🔥</span>
+                        <span class="streak-fire active">🔥</span>
+                        <span class="streak-fire active">🔥</span>
+                        <span class="streak-fire active">🔥</span>
+                        <span class="streak-fire active">🔥</span>
+                        <span class="streak-fire">🔥</span>
+                        <span class="streak-count">6<br><span class="streak-days">days</span></span>
                     </div>
+                    <div class="streak-sub">Current Week's Streak</div>
                 </div>
-                
-                <!-- XP Progress Container -->
-                <div class="xp-container">
-                    <div class="xp-progress-card">
-                        <h3 class="card-title">XP Progress</h3>
-                        <div class="xp-ring-container">
-                            <div class="xp-progress-ring">
-                                <svg class="xp-ring" width="120" height="120">
-                                    <circle class="xp-ring-bg" cx="60" cy="60" r="50" fill="none" stroke="#e9ecef" stroke-width="8"/>
-                                    <circle class="xp-ring-progress" cx="60" cy="60" r="50" fill="none" stroke="#667eea" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="188"/>
-                                </svg>
-                                <div class="xp-ring-content">
-                                    <span class="xp-level">Level I</span>
-                                    <span class="xp-current">65/100</span>
-                                </div>
-                            </div>
-                        </div>
+                <div class="dashboard-card xp-card">
+                    <div class="xp-title">XP Progress</div>
+                    <div class="xp-progress">
+                        <canvas id="xp-ring" width="90" height="90"></canvas>
+                        <div class="xp-level" id="xp-level">V</div>
                     </div>
+                    <div class="xp-points" id="xp-points">6/100 XP</div>
                 </div>
-                
-                <!-- Journal Library Container -->
-                <div class="log-card" onclick="navigateToSection('journal-library')">
-                    <div class="log-icon">📖</div>
-                    <h3 class="card-title">Journal Library</h3>
-                    <p class="log-description">Collection of all your journals</p>
-                    <a class="click-indicator" href="#" onclick="navigateToSection('journal-library'); return false;">Click to view →</a>
+                <div class="dashboard-card journal-card">
+                    <div class="journal-icon">📖</div>
+                    <div class="journal-title">Journal Library</div>
+                    <div class="journal-desc">Collection of all your journals</div>
+                    <a href="#" class="journal-link">View Journals <span class="arrow">➔</span></a>
                 </div>
-                
-                <!-- Log Diary Container -->
-                <div class="log-container">
-                    <div class="log-card" onclick="navigateToSection('log-diary')">
-                        <div class="log-icon">📝</div>
-                        <h3 class="card-title">Log Diary</h3>
-                        <p class="log-description">See all your daily log entries</p>
-                        <div class="click-indicator">Click to view →</div>
-                    </div>
-                </div>
-
-                <!-- Weekly Daily Stress Level Chart -->
-                <div class="dashboard-chart-card">
-                    <h3 class="chart-title">Weekly Daily Stress Level</h3>
-                    <div class="chart-xy-row">
-                        <div class="y-label y-ticks">
-                            <span>10</span>
-                            <span>8</span>
-                            <span>6</span>
-                            <span>4</span>
-                            <span>2</span>
-                            <span>0</span>
-                        </div>
-                        <div class="xy-area">
-                            <div class="candle-bar" style="height: 60%"></div>
-                            <div class="candle-bar" style="height: 80%"></div>
-                            <div class="candle-bar" style="height: 40%"></div>
-                            <div class="candle-bar" style="height: 70%"></div>
-                            <div class="candle-bar" style="height: 50%"></div>
-                            <div class="candle-bar" style="height: 30%"></div>
-                            <div class="candle-bar" style="height: 90%"></div>
-                        </div>
-                    </div>
-                    <div class="x-labels">
-                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                <div class="dashboard-card log-card">
+                    <div class="log-icon">📝</div>
+                    <div class="log-title">Log Diary</div>
+                    <div class="log-desc">See all your daily log entries</div>
+                    <a href="#" class="log-link">View Logs <span class="arrow">➔</span></a>
                 </div>
             </div>
-
-                <!-- Weekly Daily Average Mood Level Chart -->
-                <div class="dashboard-chart-card">
-                    <h3 class="chart-title">Weekly Daily Average Mood Level</h3>
-                    <div class="chart-xy-row">
-                        <div class="y-label y-ticks mood-ticks">
-                            <span>😢</span>
-                            <span>😞</span>
-                            <span>😐</span>
-                            <span>😊</span>
-                            <span>😁</span>
-                        </div>
-                        <div class="xy-area">
-                            <div class="candle-bar" style="height: 50%"></div>
-                            <div class="candle-bar" style="height: 60%"></div>
-                            <div class="candle-bar" style="height: 80%"></div>
-                            <div class="candle-bar" style="height: 40%"></div>
-                            <div class="candle-bar" style="height: 70%"></div>
-                            <div class="candle-bar" style="height: 30%"></div>
-                            <div class="candle-bar" style="height: 90%"></div>
-                        </div>
-                    </div>
-                    <div class="x-labels">
-                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-                    </div>
+            <div class="dashboard-stats">
+                <div class="dashboard-stat-card">
+                    <div class="stat-title">Weekly Daily Stress Level</div>
+                    <canvas id="stat-stress-chart"></canvas>
                 </div>
-
-                <!-- Weekly Daily Sleep Bar Chart -->
-                <div class="dashboard-chart-card">
-                    <h3 class="chart-title">Weekly Daily Sleep</h3>
-                    <div class="chart-xy-row">
-                        <div class="y-label y-ticks">
-                            <span>10</span>
-                            <span>8</span>
-                            <span>6</span>
-                            <span>4</span>
-                            <span>2</span>
-                            <span>0</span>
-                        </div>
-                        <div class="xy-area">
-                            <div class="bar" style="height: 70%"></div>
-                            <div class="bar" style="height: 80%"></div>
-                            <div class="bar" style="height: 60%"></div>
-                            <div class="bar" style="height: 90%"></div>
-                            <div class="bar" style="height: 50%"></div>
-                            <div class="bar" style="height: 40%"></div>
-                            <div class="bar" style="height: 75%"></div>
-                        </div>
-                    </div>
-                    <div class="x-labels">
-                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-                    </div>
+                <div class="dashboard-stat-card">
+                    <div class="stat-title">Weekly Daily Average Mood Level</div>
+                    <canvas id="stat-mood-chart"></canvas>
                 </div>
-
-                <!-- Monthly Weekly Number of Journals Chart -->
-                <div class="dashboard-chart-card">
-                    <h3 class="chart-title">Monthly Weekly Number of Journals</h3>
-                    <div class="chart-xy-row">
-                        <div class="y-label y-ticks">
-                            <span>8</span>
-                            <span>6</span>
-                            <span>4</span>
-                            <span>2</span>
-                            <span>0</span>
-                        </div>
-                        <div class="xy-area">
-                            <div class="candle-bar" style="height: 40%"></div>
-                            <div class="candle-bar" style="height: 60%"></div>
-                            <div class="candle-bar" style="height: 80%"></div>
-                            <div class="candle-bar" style="height: 30%"></div>
-                        </div>
-                    </div>
-                    <div class="x-labels">
-                        <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span>
-                    </div>
+                <div class="dashboard-stat-card">
+                    <div class="stat-title">Weekly Daily Sleep</div>
+                    <canvas id="stat-sleep-chart"></canvas>
+                </div>
+                <div class="dashboard-stat-card">
+                    <div class="stat-title">Monthly Weekly Number of Journals</div>
+                    <canvas id="stat-journals-chart"></canvas>
                 </div>
             </div>
         </section>
-
-        <!-- Journal Library Section -->
-        <section id="journal-library" class="section journal-library-section">
-            <div class="page-header">
-                <button class="back-button" onclick="navigateToSection('dashboard')">← Back to Dashboard</button>
-                <h2 class="page-title">Journal Library</h2>
+        <section class="journal-section card-centered-section" style="display:none;">
+            <button class="back-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
+            <h2 class="dashboard-title card-title">Journal Library</h2>
+            <div class="card-centered-content">
+                <h3 class="card-subtitle">Collection of all your journals</h3>
+                <p class="card-desc">Your journal entries will appear here.</p>
+                <span class="card-icon" style="font-size:3.5rem;">📚</span>
             </div>
-            <div class="page-content">
-                <div class="placeholder-content">
-                    <h3 class="placeholder-title">Collection of all your journals</h3>
-                    <p class="placeholder-description">Your journal entries will appear here.</p>
-                    <div class="placeholder-icon">📚</div>
+        </section>
+        <section class="log-section card-centered-section" style="display:none;">
+            <button class="back-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
+            <h2 class="dashboard-title card-title">Log Diary</h2>
+            <div class="card-centered-content">
+                <h3 class="card-subtitle">See all your daily log entries</h3>
+                <p class="card-desc">Your daily log entries will appear here.</p>
+                <span class="card-icon" style="font-size:3.5rem;">📝</span>
+            </div>
+        </section>
+        <section class="profile-settings-section card-centered-section" style="display:none;">
+            <button class="back-dashboard-btn" id="back-to-dashboard-btn">&#8592; Back to Dashboard</button>
+            <h2 class="profile-settings-title font-dancing">Profile Settings</h2>
+            <div class="profile-settings-cards">
+                <!-- Avatar & Display Name -->
+                <div class="profile-card profile-avatar-card">
+                    <div class="avatar-block">
+                        <img src="Avatars/thor.png" alt="Profile Avatar" class="profile-avatar-large" id="settings-profile-avatar">
+                        <button class="profile-btn profile-avatar-btn" id="change-avatar-btn">Change</button>
+                    </div>
+                    <div class="display-name-block">
+                        <label for="display-name" class="profile-label">Display Name</label>
+                        <input type="text" id="display-name" class="profile-input" value="MindZenithUser">
+                        <button class="profile-btn profile-name-btn" id="change-name-btn">Change</button>
+                    </div>
+                </div>
+                <!-- Personal Info -->
+                <div class="profile-card profile-info-card">
+                    <div class="profile-info-row"><span class="profile-label">Email:</span> <span class="profile-info-value">user@email.com</span></div>
+                    <div class="profile-info-row"><span class="profile-label">Date Joined:</span> <span class="profile-info-value">2024-07-14</span></div>
+                    <div class="profile-info-row about-me-row">
+                        <label for="about-me" class="profile-label">About Me</label>
+                        <textarea id="about-me" class="profile-input profile-about-input" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                </div>
+                <!-- Privacy -->
+                <div class="profile-card profile-privacy-card">
+                    <label class="profile-label">Privacy</label>
+                    <div class="profile-privacy-toggle-row">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="profile-privacy-desc">Show my badges on Community Wall</span>
+                    </div>
+                </div>
+                <!-- Account Actions -->
+                <div class="profile-card profile-actions-card">
+                    <a href="#" class="profile-link">Change Password</a>
+                    <button class="profile-btn profile-delete-btn">Delete Account</button>
                 </div>
             </div>
         </section>
-        
-        <!-- Log Diary Section -->
-        <section id="log-diary" class="section log-diary-section">
-            <div class="page-header">
-                <button class="back-button" onclick="navigateToSection('dashboard')">← Back to Dashboard</button>
-                <h2 class="page-title">Log Diary</h2>
-                    </div>
-            <div class="page-content">
-                <div class="placeholder-content">
-                    <h3 class="placeholder-title">See all your daily log entries</h3>
-                    <p class="placeholder-description">Your daily log entries will appear here.</p>
-                    <div class="placeholder-icon">📝</div>
+        <section class="change-password-section card-centered-section" style="display:none;">
+            <button class="back-dashboard-btn back-to-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
+            <h2 class="change-password-title font-dancing">Change Password</h2>
+            <div class="change-password-card">
+                <form class="change-password-form">
+                    <label for="current-password" class="change-label">Current Password</label>
+                    <input type="password" id="current-password" class="change-input" autocomplete="current-password">
+                    <label for="new-password" class="change-label">New Password</label>
+                    <input type="password" id="new-password" class="change-input" autocomplete="new-password">
+                    <label for="confirm-password" class="change-label">Confirm New Password</label>
+                    <input type="password" id="confirm-password" class="change-input" autocomplete="new-password">
+                    <button class="change-password-btn" type="submit">Change Password</button>
+                </form>
+            </div>
+        </section>
+        <section class="achievements-section card-centered-section" style="display:none;">
+            <button class="back-dashboard-btn back-to-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
+            <h2 class="achievements-title font-dancing">Achievements & Badges</h2>
+            <div class="achievements-grid" id="achievements-grid"></div>
+        </section>
+        <section class="store-section card-centered-section" style="display:none;">
+            <button class="back-dashboard-btn back-to-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
+            <h2 class="store-title font-dancing">Store Section</h2>
+            <div class="store-xp-bar-container">
+                <div class="store-xp-bar-labels">
+                    <span class="store-xp-label">XP Progress</span>
+                    <span class="store-xp-value" id="store-xp-value">65/100 XP</span>
                 </div>
+                <div class="store-xp-bar-bg">
+                    <div class="store-xp-bar-fill" id="store-xp-bar-fill"></div>
+                </div>
+                <div class="store-xp-wallet">
+                    <span class="wallet-label">Total XP Wallet:</span>
+                    <span class="wallet-value" id="store-xp-wallet">650</span>
+                </div>
+            </div>
+            <div class="store-how-it-works">
+                <span class="how-it-works-icon">❕</span>
+                <span class="how-it-works-title">How it works?</span>
+                <span class="how-it-works-desc">XP is earned by logging daily to the website, participating in the challenges, completing different tasks, attempting quizes, filling journals periodically, filling daily mood log etc.</span>
+            </div>
+            <div class="store-section-group">
+                <div class="store-section-header">
+                    <span class="store-category-title">Avatars</span>
+                    <div class="store-toggle-group">
+                        <button class="store-toggle-btn active" id="avatar-toggle-owned">Owned</button>
+                        <button class="store-toggle-btn" id="avatar-toggle-available">Available</button>
+                    </div>
+                </div>
+                <div class="store-items-grid" id="avatar-items-grid"></div>
+            </div>
+            <div class="store-section-group">
+                <div class="store-section-header">
+                    <span class="store-category-title">Virtual Pets</span>
+                    <div class="store-toggle-group">
+                        <button class="store-toggle-btn active" id="pet-toggle-owned">Owned</button>
+                        <button class="store-toggle-btn" id="pet-toggle-available">Available</button>
+                    </div>
+                </div>
+                <div class="store-items-grid" id="pet-items-grid"></div>
+            </div>
+        </section>
+        <section class="logout-section card-centered-section" style="display:none;">
+            <div id="auth-container"></div>
+        </section>
+        <!-- Delete Account Modal -->
+        <div id="delete-account-modal" class="modal-overlay" style="display:none;">
+            <div class="modal-content">
+                <h3 class="modal-title font-dancing">Delete Account?</h3>
+                <p class="modal-message">Are you sure you want to delete your account and all your data? This action cannot be undone.</p>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-cancel-btn">Cancel</button>
+                    <button class="modal-btn modal-delete-btn">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+        <section class="how-it-works-section">
+            <h2 class="hiw-title">How It Works</h2>
+            <div class="hiw-cards">
+                <div class="hiw-card">
+                    <div class="hiw-step-num">1</div>
+                    <div class="hiw-step-title">Sign Up & Set Goals</div>
+                    <div class="hiw-step-desc">Choose your 3 core habits and mood tags.</div>
+                </div>
+                <div class="hiw-card">
+                    <div class="hiw-step-num">2</div>
+                    <div class="hiw-step-title">Log In Daily</div>
+                    <div class="hiw-step-desc">Fill out your mood, journal, and habit checklist.</div>
+                </div>
+                <div class="hiw-card">
+                    <div class="hiw-step-num">3</div>
+                    <div class="hiw-step-title">Earn & Spend XP</div>
+                    <div class="hiw-step-desc">Level up, unlock new rewards, and customize your space.</div>
+                </div>
+            </div>
+        </section>
+        <section class="key-features-section">
+            <h2 class="kf-title">Key Features</h2>
+            <div class="kf-cards">
+                <div class="kf-card">
+                    <div class="kf-icon">📝</div>
+                    <div class="kf-title-text">Daily Logs & Guided Journaling</div>
+                    <div class="kf-desc">Track mood, sleep, gratitude, and more with simple prompts.</div>
+                </div>
+                <div class="kf-card">
+                    <div class="kf-icon">📊</div>
+                    <div class="kf-title-text">Habit & Streak Tracker</div>
+                    <div class="kf-desc">Build micro-habits (meditation, walks, screen breaks). Stay accountable with gentle reminders.</div>
+                </div>
+                <div class="kf-card">
+                    <div class="kf-icon">🏆</div>
+                    <div class="kf-title-text">Real-Time Challenge Rooms</div>
+                    <div class="kf-desc">Join public or private "30-Day Mindful" challenges—cheer each other on in real time.</div>
+                </div>
+                <div class="kf-card">
+                    <div class="kf-icon">📈</div>
+                    <div class="kf-title-text">Interactive Progress Dashboard</div>
+                    <div class="kf-desc">Beautiful charts and trend lines show your emotional highs, lows, and habit streaks.</div>
+                </div>
+                <div class="kf-card">
+                    <div class="kf-icon">⭐</div>
+                    <div class="kf-title-text">XP & Leveling System</div>
+                    <div class="kf-desc">Earn points for every log, journal entry, and completed challenge. Rise from Beginner all the way to Zenither.</div>
+                </div>
+                <div class="kf-card">
+                    <div class="kf-icon">🏅</div>
+                    <div class="kf-title-text">Achievements & Badges</div>
+                    <div class="kf-desc">Hit streak milestones, complete journaling milestones, or finish gratitude sprints—and collect badges to show off.</div>
+                </div>
+                <div class="kf-card">
+                    <div class="kf-icon">🎨</div>
+                    <div class="kf-title-text">Customization & Rewards</div>
+                    <div class="kf-desc">Spend points on avatar gear, new color themes, or adopt a virtual pet that "levels up" with you.</div>
+                </div>
+                <div class="kf-card">
+                    <div class="kf-icon">👥</div>
+                    <div class="kf-title-text">Community & Support</div>
+                    <div class="kf-desc">Share reflections, send encouragement, and join themed discussion rooms.</div>
+                </div>
+            </div>
+        </section>
+        <section class="quote-gallery-section">
+            <h2 class="quote-gallery-title">Quote Gallery</h2>
+            <div class="quote-gallery-grid">
+                <img src="quotes/quote1.png" alt="Quote 1" class="quote-img clickable-img">
+                <img src="quotes/quote2.png" alt="Quote 2" class="quote-img clickable-img">
+                <img src="quotes/quote3.png" alt="Quote 3" class="quote-img clickable-img">
+                <img src="quotes/quote4.png" alt="Quote 4" class="quote-img clickable-img">
+                <img src="quotes/quote5.png" alt="Quote 5" class="quote-img clickable-img">
+                <img src="quotes/quote6.png" alt="Quote 6" class="quote-img clickable-img">
+                <img src="quotes/quote7.jpeg" alt="Quote 7" class="quote-img clickable-img">
+                <img src="quotes/quote8.jpeg" alt="Quote 8" class="quote-img clickable-img">
             </div>
         </section>
     </main>
-
+    <!-- Modal for maximized images -->
+    <div id="image-modal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img" alt="Maximized Image">
+    </div>
+    <!-- Avatar Selection Modal -->
+    <div id="avatar-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 class="modal-title font-dancing">Choose Your Avatar</h3>
+            <div id="avatar-modal-grid" style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center; margin: 1.2rem 0;"></div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-cancel-btn">Cancel</button>
+                <button class="modal-btn modal-select-avatar-btn" disabled>Change</button>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
