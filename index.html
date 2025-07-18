@@ -27,7 +27,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" class="dropdown-item">Meditation</a></li>
                             <li><a href="#" class="dropdown-item">Quiz</a></li>
-                            <li><a href="#" class="dropdown-item">Journal</a></li>
+                            <li><a href="#" class="dropdown-item" id="activity-journal-link">Journal</a></li>
                             <li><a href="#" class="dropdown-item">Daily Log</a></li>
                         </ul>
                     </li>
@@ -292,6 +292,31 @@
         <section class="logout-section card-centered-section" style="display:none;">
             <div id="auth-container"></div>
         </section>
+        <section class="quiz-section card-centered-section" style="display:none;">
+            <button class="back-dashboard-btn back-to-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
+            <h1 class="dashboard-title card-title">Quiz Center</h1>
+            <div class="card-centered-content">
+                <div class="quiz-intro-banner">
+                    <h1 class="quiz-intro-title">Take a Mental Health Test</h1>
+                    <p class="quiz-intro-desc">
+                        Online screening is one of the quickest and easiest ways to determine whether you are experiencing symptoms of a mental health condition.
+                    </p>
+                    <p class="quiz-intro-highlight">
+                        <b>Mental health conditions, such as depression or anxiety, are real, common and treatable. And recovery is possible.</b>
+                    </p>
+                </div>
+                <div class="quiz-collapsible-list" id="quiz-collapsible-list">
+                    <!-- Collapsible test boxes will be rendered here by JS -->
+                </div>
+            </div>
+        </section>
+        <!-- Add a placeholder for quiz pages -->
+        <section class="quiz-page-section card-centered-section" style="display:none;">
+            <button class="back-quiz-btn" type="button">&#8592; Back to Quiz Center</button>
+            <div class="quiz-page-content">
+                <!-- Quiz content will be rendered here by JS -->
+            </div>
+        </section>
         <!-- Delete Account Modal -->
         <div id="delete-account-modal" class="modal-overlay" style="display:none;">
             <div class="modal-content">
@@ -398,6 +423,22 @@
             </div>
         </div>
     </div>
+    <!-- Journal Section (Landing Page) -->
+    <section id="journal-landing" style="display:none;">
+      <div class="journal-top-bar">
+        <button id="journal-back-dashboard" class="journal-btn">&larr; Back to Dashboard</button>
+        <div class="journal-top-bar-right">
+          <button id="journal-tags-btn" class="journal-btn">Tags</button>
+          <button id="journal-new-journal-btn" class="journal-btn journal-primary">+ New Journal</button>
+        </div>
+      </div>
+      <div class="journal-books-grid" id="journal-books-grid">
+        <!-- Journal book cards will be rendered here by JS -->
+      </div>
+    </section>
+    <!-- Journal Modals/Pages -->
+    <div id="journal-view-entries-modal" style="display:none;"></div>
+    <div id="journal-new-entry-modal" style="display:none;"></div>
     <script src="script.js"></script>
 </body>
 </html>

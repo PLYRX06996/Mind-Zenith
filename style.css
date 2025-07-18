@@ -1118,6 +1118,184 @@ body {
     }
 }
 
+.quiz-library {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.quiz-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 12px rgba(122,108,255,0.08);
+    padding: 2rem 1.5rem;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: box-shadow 0.2s;
+}
+.quiz-card:hover {
+    box-shadow: 0 4px 24px rgba(122,108,255,0.13);
+}
+.quiz-card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    color: #6c5cff;
+}
+.quiz-card-desc {
+    font-size: 1.05rem;
+    color: #444;
+    margin-bottom: 1.2rem;
+}
+.quiz-card-btn {
+    background: #6c5cff;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.quiz-card-btn:hover {
+    background: #3a7afe;
+}
+.back-quiz-btn {
+    margin-bottom: 1.5rem;
+    background: #fffbe6;
+    color: #222;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.quiz-intro-banner {
+    background: #f3f0ff;
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem 2rem 2rem;
+    margin-bottom: 2.5rem;
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(122,108,255,0.08);
+}
+.quiz-intro-title {
+    font-size: 2.7rem;
+    font-weight: 800;
+    color: #27608a;
+    margin-bottom: 1.2rem;
+    font-family: inherit;
+}
+.quiz-intro-desc {
+    font-size: 1.15rem;
+    color: #2a3a4a;
+    margin-bottom: 1.1rem;
+}
+.quiz-intro-highlight {
+    font-size: 1.13rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.quiz-collapsible-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.quiz-collapsible-card {
+    background: #ede6ff;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 12px rgba(122,108,255,0.08);
+    width: 320px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s;
+    overflow: hidden;
+    border: 2px solid #a18aff;
+}
+
+.quiz-collapsible-header {
+    padding: 1.3rem 1.5rem 1.1rem 1.5rem;
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #6c5cff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    background: #f7f3ff;
+    border-bottom: 1px solid #e0d6ff;
+    transition: background 0.15s;
+}
+.quiz-collapsible-header:hover {
+    background: #ece3ff;
+}
+.quiz-collapsible-icon {
+    font-size: 1.5rem;
+    color: #a18aff;
+    margin-left: 1rem;
+    transition: transform 0.2s;
+}
+.quiz-collapsible-card.open .quiz-collapsible-icon {
+    transform: rotate(45deg);
+}
+
+.quiz-collapsible-content {
+    padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+    font-size: 1.07rem;
+    color: #333;
+    display: none;
+    animation: fadeIn 0.2s;
+}
+.quiz-collapsible-card.open .quiz-collapsible-content {
+    display: block;
+}
+
+.quiz-collapsible-action {
+    margin-top: 1.2rem;
+    font-weight: 700;
+    color: #6c5cff;
+    cursor: pointer;
+    display: inline-block;
+    background: #e6dbff;
+    border-radius: 0.7rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    font-size: 1.08rem;
+    transition: background 0.15s;
+    text-align: left;
+}
+.quiz-collapsible-action:hover {
+    background: #d1bfff;
+    color: #3a1cff;
+}
+
+@media (max-width: 900px) {
+    .quiz-collapsible-list {
+        flex-direction: column;
+        align-items: center;
+    }
+    .quiz-collapsible-card {
+        width: 95vw;
+        max-width: 400px;
+    }
+}
+.anxiety-banner {
+    background: #e1d7f7;
+    border-left: 6px solid #8e24aa;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    padding: 18px 24px;
+  }
+
 /* --- Profile Settings Section Refined --- */
 .profile-settings-section {
     max-width: 1400px;
@@ -2304,6 +2482,26 @@ input:checked + .slider:before {
     text-align: left;
     display: none;
 }
+.quiz-q-option-btn {
+    display: inline-block;
+    border: 1.5px solid #d1bfff;
+    border-radius: 2rem;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.07rem;
+    color: #27608a;
+    background: #fff;
+    transition: all 0.15s;
+    margin-right: 1.2rem;
+    margin-bottom: 0.5rem;
+    user-select: none;
+  }
+  .quiz-q-option-btn:hover,
+  .quiz-q-option-btn:focus {
+    background: #f0eaff;
+    border-color: #7a6cff;
+  }
 
 .mind-plan-intro {
     background: linear-gradient(135deg, #f7f7ff 60%, #eaf6fa 100%);
@@ -2517,5 +2715,131 @@ input:checked + .slider:before {
     .anxiety-section-title {
         font-size: 1.1rem;
     }
+}
+
+/* Journal Section Styles */
+.journal-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem 1.2rem 2rem;
+  background: rgba(255,255,255,0.95);
+  border-bottom: 1.5px solid #e3e9f0;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.journal-top-bar-right {
+  display: flex;
+  gap: 1.2rem;
+}
+.journal-btn {
+  background: #f5f7fa;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.3rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #3a1cff;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.journal-btn:hover, .journal-btn:focus {
+  background: #e3e9f0;
+  color: #222;
+}
+.journal-primary {
+  background: #6c5cff;
+  color: #fff;
+}
+.journal-primary:hover, .journal-primary:focus {
+  background: #3a1cff;
+  color: #fff;
+}
+.journal-books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.2rem;
+  padding: 2.5rem 2rem;
+}
+.journal-book {
+  position: relative;
+  background: linear-gradient(120deg, #f7f5f2 80%, #e3e9f0 100%);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(44,62,80,0.13), 0 1.5px 6px rgba(44,62,80,0.10);
+  min-height: 220px;
+  padding: 2.2rem 2rem 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.journal-book-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 100%;
+  background: linear-gradient(120deg, #b7a77a 60%, #e3e9f0 100%);
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  box-shadow: 2px 0 8px rgba(44,62,80,0.10);
+}
+.journal-book-title {
+  font-size: 2rem;
+  font-family: 'Pacifico', cursive;
+  color: #444;
+  margin-bottom: 1.5rem;
+  margin-left: 1.2rem;
+}
+.journal-book-actions {
+  display: flex;
+  gap: 1.2rem;
+  margin-left: 1.2rem;
+}
+.journal-book-action-btn {
+  background: #fff;
+  border: 1.5px solid #d1bfff;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #6c5cff;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.journal-book-action-btn:hover, .journal-book-action-btn:focus {
+  background: #f5f7fa;
+  color: #3a1cff;
+  border-color: #3a1cff;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .journal-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1rem 1rem 1rem;
+  }
+  .journal-books-grid {
+    padding: 1.2rem 0.5rem;
+    gap: 1.2rem;
+  }
+  .journal-book {
+    padding: 1.2rem 1rem 1rem 1.5rem;
+  }
+}
+
+/* Modal overlays for journal pages */
+#journal-view-entries-modal, #journal-new-entry-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,62,80,0.13);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 

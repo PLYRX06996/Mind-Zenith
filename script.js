@@ -115,6 +115,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 navLinks.forEach(link => link.classList.remove('active'));
             });
         }
+        // NEW: Journal
+        const journalItem = Array.from(activityZoneDropdown.querySelectorAll('.dropdown-item')).find(a => a.textContent.trim() === 'Journal');
+        if (journalItem) {
+            journalItem.addEventListener('click', function(e) {
+                e.preventDefault();
+                showJournalLanding();
+                navLinks.forEach(link => link.classList.remove('active'));
+            });
+        }
     }
     // Meditations: Back to Dashboard
     if (meditationsSection) {
@@ -190,6 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     window.location.href = 'index.html';
                 }
+            } else if (text === 'Journal') {
+                e.preventDefault();
+                showJournalLanding();
             }
         });
     });
@@ -933,7 +945,7 @@ document.addEventListener('DOMContentLoaded', function() {
             html += `
             <div class="quiz-crisis-box" style="display:none;background:#87306a;color:#fff;padding:1.3rem 1.2rem 1.1rem 1.2rem;border-radius:1.2rem;margin:1.5rem 0 0.5rem 0;font-size:1.08rem;">
                 If you need immediate help, you can reach the Suicide & Crisis Lifeline by calling or texting <b>988</b> or using the chat box at <a href="https://988lifeline.org" target="_blank" style="color:#fff;text-decoration:underline;"><b>988lifeline.org</b></a>.
-                You can also <a href="sms:741741" style="color:#fff;text-decoration:underline;"><b>text “MHA” to 741-741</b></a> to reach the Crisis Text Line.
+                You can also <a href="sms:741741" style="color:#fff;text-decoration:underline;"><b>text "MHA" to 741-741</b></a> to reach the Crisis Text Line.
                 <a href="https://warmline.org/" target="_blank" style="color:#fff;text-decoration:underline;"><b>Warmlines</b></a> are an excellent place for non-crisis support.
             </div>
             `;
@@ -1132,9 +1144,9 @@ function renderBipolarTestQuiz(containerSelector = '.quiz-page-content') {
             "You felt so good or hyper that other people thought you were not your normal self or were so hyper that you got into trouble?",
             "You were so irritable that you shouted at people or started fights or arguments?",
             "You felt much more self-confident than usual?",
-            "You got much less sleep than usual and found you didn’t really miss it?",
+            "You got much less sleep than usual and found you didn't really miss it?",
             "You were much more talkative or spoke much faster than usual?",
-            "Thoughts raced through your head or you couldn’t slow your mind down?",
+            "Thoughts raced through your head or you couldn't slow your mind down?",
             "You were so easily distracted by things around you that you had trouble concentrating or staying on track?",
             "You had much more energy than usual?",
             "You were much more social or outgoing than usual, for example, you telephoned friends in the middle of the night?",
@@ -1281,6 +1293,511 @@ function renderBipolarTestQuiz(containerSelector = '.quiz-page-content') {
     }
   };
 }
+function renderPsychosisTestQuiz(containerSelector = '.quiz-page-content') {
+  const questions = [
+    "Do familiar surroundings sometimes seem strange, confusing, threatening or unreal to you?",
+    "Have you heard unusual sounds like banging, clicking, hissing, clapping or ringing in your ears?",
+    "Do things that you see appear different from the way they usually do?",
+    "Have you had experiences with telepathy, psychic forces, or fortune telling?",
+    "Have you felt that you are not in control of your own ideas or thoughts?",
+    "Do you have difficulty getting your point across, because you ramble or go off the track a lot when you talk?",
+    "Do you have strong feelings or beliefs about being unusually gifted or talented in some way?",
+    "Do you feel that other people are watching you or talking about you?",
+    "Do you sometimes get strange feelings on or just beneath your skin, like bugs crawling?",
+    "Do you sometimes feel suddenly distracted by distant sounds that you are not normally aware of?",
+    "Have you had the sense that some person or force is around you, although you couldn't see anyone?",
+    "Do you worry at times that something may be wrong with your mind?",
+    "Have you ever felt that you don't exist, the world does not exist, or that you are dead?",
+    "Have you been confused at times whether something you experienced was real or imaginary?",
+    "Do you hold beliefs that other people would find unusual or bizarre?",
+    "Do you feel that parts of your body have changed in some way, or that parts of your body are working differently?",
+    "Are your thoughts sometimes so strong that you can almost hear them?",
+    "Do you find yourself feeling mistrustful or suspicious of other people?",
+    "Have you seen unusual things like flashes, flames, blinding light, or geometric figures?",
+    "Have you seen things that other people can't see or don't seem to see?",
+    "Do people sometimes find it hard to understand what you are saying?"
+  ];
+
+  const distressOptions = [
+    "Not distressing",
+    "Mildly distressing", 
+    "Moderately distressing",
+    "Severely distressing",
+    "Extremely distressing"
+  ];
+
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  let html = `
+    <h2 class="dashboard-title card-title" style="margin-bottom:1.2rem;">Psychosis & Schizophrenia Test</h2>
+    <div class="card-desc" style="margin-bottom:2rem;">
+      Have you recently had the following thoughts, feelings, or experiences? Check "yes" or "no" for each item.<br><br>
+      Do not include experiences that occur only while under the influence of alcohol, drugs or medications that were not prescribed to you.<br><br>
+      If you answer "YES" to an item, also indicate how distressing that experience has been for you.<br><br>
+      <span style="color:#b00;font-weight:600;">Please note, all fields are required.</span><br><br>
+      <strong>In the past month...</strong>
+    </div>
+    <form id="psychosis-quiz-form" autocomplete="off">
+  `;
+
+  questions.forEach((q, i) => {
+    html += `
+      <div class="quiz-q-block" style="margin-bottom:2.2rem;">
+        <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">${i+1}. ${q}</div>
+        <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+            <input type="radio" name="q${i+1}" value="no" style="display:none;">
+            <span>No</span>
+          </label>
+          <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+            <input type="radio" name="q${i+1}" value="yes" style="display:none;">
+            <span>Yes</span>
+          </label>
+        </div>
+        <div class="quiz-distress-section" style="display:none;margin-left:1.2rem;">
+          <div style="font-weight:600;margin-bottom:0.8rem;color:#6c5cff;">How distressing has this experience been for you?</div>
+          <div class="quiz-distress-options" style="display:flex;gap:0.8rem;flex-wrap:wrap;">`;
+
+    distressOptions.forEach((opt, j) => {
+      html += `
+        <label class="quiz-distress-option-btn" style="border:1.5px solid #ffb3ba;border-radius:1.5rem;padding:0.5rem 1rem;cursor:pointer;font-weight:500;font-size:0.95rem;color:#8B4513;background:#fff;transition:all 0.15s;">
+          <input type="radio" name="q${i+1}_distress" value="${j}" style="display:none;">
+          <span>${opt}</span>
+        </label>
+      `;
+    });
+
+    html += `
+          </div>
+        </div>
+        <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+          Error:<br> This field is required.
+        </div>
+        <div class="quiz-distress-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+          Error:<br> Please indicate how distressing this experience has been.
+        </div>
+      </div>
+    `;
+  });
+
+  html += `
+    <button type="submit" class="quiz-submit-btn" style="margin-top:1.5rem;background:#6c5cff;color:#fff;font-weight:700;padding:0.9rem 2.2rem;border:none;border-radius:2rem;font-size:1.13rem;cursor:pointer;">Submit</button>
+    </form>
+  `;
+
+  container.innerHTML = html;
+
+  // Button selection styling for main yes/no options
+  container.querySelectorAll('.quiz-q-option-btn').forEach(label => {
+    const input = label.querySelector('input[type=radio]');
+    label.addEventListener('click', function(e) {
+      e.preventDefault();
+      const questionBlock = label.closest('.quiz-q-block');
+      const allOptions = questionBlock.querySelectorAll('.quiz-q-option-btn');
+
+      allOptions.forEach(opt => {
+        opt.style.background = '#fff';
+        opt.style.color = '#27608a';
+        opt.style.borderColor = '#d1bfff';
+      });
+
+      label.style.background = '#6c5cff';
+      label.style.color = '#fff';
+      label.style.borderColor = '#6c5cff';
+      input.checked = true;
+
+      // Show/hide distress section based on answer
+      const distressSection = questionBlock.querySelector('.quiz-distress-section');
+      if (input.value === 'yes') {
+        distressSection.style.display = 'block';
+      } else {
+        distressSection.style.display = 'none';
+        // Clear distress selection if hiding
+        distressSection.querySelectorAll('input[type=radio]').forEach(radio => radio.checked = false);
+        distressSection.querySelectorAll('.quiz-distress-option-btn').forEach(btn => {
+          btn.style.background = '#fff';
+          btn.style.color = '#8B4513';
+          btn.style.borderColor = '#ffb3ba';
+        });
+      }
+    });
+  });
+
+  // Button selection styling for distress options
+  container.querySelectorAll('.quiz-distress-option-btn').forEach(label => {
+    const input = label.querySelector('input[type=radio]');
+    label.addEventListener('click', function(e) {
+      e.preventDefault();
+      const distressSection = label.closest('.quiz-distress-section');
+      const allDistressOptions = distressSection.querySelectorAll('.quiz-distress-option-btn');
+
+      allDistressOptions.forEach(opt => {
+        opt.style.background = '#fff';
+        opt.style.color = '#8B4513';
+        opt.style.borderColor = '#ffb3ba';
+      });
+
+      label.style.background = '#ff6b6b';
+      label.style.color = '#fff';
+      label.style.borderColor = '#ff6b6b';
+      input.checked = true;
+    });
+  });
+
+  // Form submission
+  const form = container.querySelector('#psychosis-quiz-form');
+  form.onsubmit = function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    questions.forEach((q, i) => {
+      const qBlock = container.querySelector(`.quiz-q-block:nth-child(${i+1})`);
+      const errorDiv = qBlock.querySelector('.quiz-error');
+      const distressErrorDiv = qBlock.querySelector('.quiz-distress-error');
+      const mainAnswer = container.querySelector(`input[name="q${i+1}"]:checked`);
+
+      // Check main question
+      if (!mainAnswer) {
+        valid = false;
+        errorDiv.style.display = 'block';
+      } else {
+        errorDiv.style.display = 'none';
+
+        // If answered "yes", check distress level
+        if (mainAnswer.value === 'yes') {
+          const distressAnswer = container.querySelector(`input[name="q${i+1}_distress"]:checked`);
+          if (!distressAnswer) {
+            valid = false;
+            distressErrorDiv.style.display = 'block';
+          } else {
+            distressErrorDiv.style.display = 'none';
+          }
+        } else {
+          distressErrorDiv.style.display = 'none';
+        }
+      }
+    });
+
+    if (valid) {
+      alert('Psychosis test submitted! (Handle results here)');
+      // Handle results here
+    }
+  };
+}
+function renderADHDTestQuiz(containerSelector = '.quiz-page-content') {
+  const questions = [
+    "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?",
+    "How often do you have difficulty getting things in order when you have to do a task that requires organization?",
+    "How often do you have problems remembering appointments or obligations?",
+    "When you have a task that requires a lot of thought, how often do you avoid or delay getting started?",
+    "How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?",
+    "How often do you feel overly active and compelled to do things, like you were driven by a motor?",
+    "How often do you make careless mistakes when you have to work on a boring or difficult project?",
+    "How often do you have difficulty keeping your attention when you are doing boring or repetitive work?",
+    "How often do you have difficulty concentrating on what people say to you, even when they are speaking to you directly?",
+    "How often do you misplace or have difficulty finding things at home or at work?",
+    "How often are you distracted by activity or noise around you?",
+    "How often do you leave your seat in meetings or other situations in which you are expected to remain seated?",
+    "How often do you feel restless or fidgety?",
+    "How often do you have difficulty unwinding and relaxing when you have time to yourself?",
+    "How often do you find yourself talking too much when you are in social situations?",
+    "When you're in a conversation, how often do you find yourself finishing the sentences of the people you are talking to, before they can finish them themselves?",
+    "How often do you have difficulty waiting your turn in situations when turn taking is required?",
+    "How often do you interrupt others when they are busy?"
+  ];
+
+  const options = [
+    "Never",
+    "Rarely", 
+    "Sometimes",
+    "Often",
+    "Very Often"
+  ];
+
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  let html = `
+    <h2 class="dashboard-title card-title" style="margin-bottom:1.2rem;">ADHD Test</h2>
+    <div class="card-desc" style="margin-bottom:2rem;">Please answer the questions below, rating yourself on each of the criteria shown. As you answer each question, select the button that best describes how you have felt and conducted yourself over the past 6 months.<br><span style="color:#b00;font-weight:600;">Please note, all fields are required.</span></div>
+    <form id="adhd-quiz-form" autocomplete="off">
+  `;
+
+  questions.forEach((q, i) => {
+    html += `<div class="quiz-q-block" style="margin-bottom:2.2rem;">
+      <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">${i+1}. ${q}</div>
+      <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;">`;
+    options.forEach((opt, j) => {
+      html += `
+        <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+          <input type="radio" name="q${i+1}" value="${j}" style="display:none;">
+          <span>${opt}</span>
+        </label>
+      `;
+    });
+    html += `</div>
+      <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+        Error:<br> This field is required.
+      </div>
+    </div>`;
+  });
+
+  html += `
+    <button type="submit" class="quiz-submit-btn" style="margin-top:1.5rem;background:#6c5cff;color:#fff;font-weight:700;padding:0.9rem 2.2rem;border:none;border-radius:2rem;font-size:1.13rem;cursor:pointer;">Submit</button>
+    </form>
+  `;
+
+  container.innerHTML = html;
+
+  // Button selection styling
+  container.querySelectorAll('.quiz-q-option-btn').forEach(label => {
+    const input = label.querySelector('input[type=radio]');
+    label.addEventListener('click', function(e) {
+      if (e.target.tagName === 'INPUT') return;
+      const name = input.name;
+      container.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+        i.parentElement.style.background = '#fff';
+        i.parentElement.style.color = '#27608a';
+        i.parentElement.style.borderColor = '#d1bfff';
+      });
+      input.checked = true;
+      label.style.background = '#3a1cff';
+      label.style.color = '#fff';
+      label.style.borderColor = '#3a1cff';
+    });
+  });
+
+  // Form validation
+  container.querySelector('#adhd-quiz-form').onsubmit = function(e) {
+    e.preventDefault();
+    let valid = true;
+    for (let i = 1; i <= 18; i++) {
+      const qBlock = container.querySelectorAll('.quiz-q-block')[i-1];
+      const errorDiv = qBlock.querySelector('.quiz-error');
+      if (!container.querySelector(`input[name="q${i}"]:checked`)) {
+        valid = false;
+        errorDiv.style.display = 'block';
+      } else {
+        errorDiv.style.display = 'none';
+      }
+    }
+    if (valid) {
+      // Calculate ADHD score
+      let totalScore = 0;
+      for (let i = 1; i <= 18; i++) {
+        const checked = container.querySelector(`input[name="q${i}"]:checked`);
+        if (checked) {
+          totalScore += parseInt(checked.value);
+        }
+      }
+
+      // Show results based on score
+      let resultMessage = '';
+      let resultLevel = '';
+
+      if (totalScore >= 0 && totalScore <= 17) {
+        resultLevel = 'Low';
+        resultMessage = 'Your responses suggest a low likelihood of ADHD symptoms. However, if you\'re experiencing difficulties in your daily life, consider speaking with a healthcare professional.';
+      } else if (totalScore >= 18 && totalScore <= 35) {
+        resultLevel = 'Moderate';
+        resultMessage = 'Your responses suggest some ADHD symptoms that may be affecting your daily life. Consider discussing these results with a healthcare professional for a proper evaluation.';
+      } else if (totalScore >= 36 && totalScore <= 54) {
+        resultLevel = 'High';
+        resultMessage = 'Your responses suggest significant ADHD symptoms. It is recommended that you speak with a healthcare professional for a comprehensive evaluation and potential treatment options.';
+      } else {
+        resultLevel = 'Very High';
+        resultMessage = 'Your responses suggest very significant ADHD symptoms that may be considerably impacting your daily functioning. It is strongly recommended that you seek professional evaluation as soon as possible.';
+      }
+
+      alert(`ADHD Assessment Results\n\nScore: ${totalScore}/72\nLevel: ${resultLevel}\n\n${resultMessage}\n\nDisclaimer: This assessment is for educational purposes only and should not replace professional medical advice. Please consult with a qualified healthcare provider for proper diagnosis and treatment.`);
+    }
+  };
+}
+function renderPTSDTestQuiz(containerSelector = '.quiz-page-content') {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  let html = `
+    <h2 class="dashboard-title card-title" style="margin-bottom:1.2rem;">PTSD Test</h2>
+    <div class="card-desc" style="margin-bottom:2rem;">
+      Sometimes things happen to people that are unusually or especially frightening, horrible, or traumatic. For example:
+      <ul style="margin:1rem 0 1.5rem 1.5rem;">
+        <li>a serious accident or fire</li>
+        <li>a physical or sexual assault or abuse</li>
+        <li>an earthquake or flood</li>
+        <li>a war</li>
+        <li>seeing someone be killed or seriously injured</li>
+        <li>having a loved one die through homicide or suicide</li>
+      </ul>
+      <b>Have you ever experienced this kind of event?</b>
+    </div>
+    <form id="ptsd-quiz-form" autocomplete="off">
+      <div class="quiz-q-block" style="margin-bottom:2.2rem;">
+        <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">Have you ever experienced this kind of event?</div>
+        <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+            <input type="radio" name="q0" value="yes" style="display:none;">
+            <span>Yes</span>
+          </label>
+          <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+            <input type="radio" name="q0" value="no" style="display:none;">
+            <span>No</span>
+          </label>
+        </div>
+        <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+          Error:<br> This field is required.
+        </div>
+      </div>
+      <div id="ptsd-followup-questions" style="display:none;">
+        <div class="quiz-q-block" style="margin-bottom:2.2rem;">
+          <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">1. In the past month, have you had nightmares about the event(s) or thought about the event(s) when you did not want to?</div>
+          <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;">
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q1" value="no" style="display:none;">
+              <span>No</span>
+            </label>
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q1" value="yes" style="display:none;">
+              <span>Yes</span>
+            </label>
+          </div>
+          <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+            Error:<br> This field is required.
+          </div>
+        </div>
+        <div class="quiz-q-block" style="margin-bottom:2.2rem;">
+          <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">2. In the past month, have you tried hard not to think about the event(s) or went out of your way to avoid situations that reminded you of the event(s)?</div>
+          <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;">
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q2" value="no" style="display:none;">
+              <span>No</span>
+            </label>
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q2" value="yes" style="display:none;">
+              <span>Yes</span>
+            </label>
+          </div>
+          <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+            Error:<br> This field is required.
+          </div>
+        </div>
+        <div class="quiz-q-block" style="margin-bottom:2.2rem;">
+          <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">3. In the past month, have you been constantly on guard, watchful, or easily startled?</div>
+          <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;">
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q3" value="no" style="display:none;">
+              <span>No</span>
+            </label>
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q3" value="yes" style="display:none;">
+              <span>Yes</span>
+            </label>
+          </div>
+          <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+            Error:<br> This field is required.
+          </div>
+        </div>
+        <div class="quiz-q-block" style="margin-bottom:2.2rem;">
+          <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">4. In the past month, have you felt numb or detached from people, activities, or your surroundings?</div>
+          <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;">
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q4" value="no" style="display:none;">
+              <span>No</span>
+            </label>
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q4" value="yes" style="display:none;">
+              <span>Yes</span>
+            </label>
+          </div>
+          <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+            Error:<br> This field is required.
+          </div>
+        </div>
+        <div class="quiz-q-block" style="margin-bottom:2.2rem;">
+          <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">5. In the past month, have you felt guilty or unable to stop blaming yourself or others for the event(s) or any problems the event(s) may have caused?</div>
+          <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;">
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q5" value="no" style="display:none;">
+              <span>No</span>
+            </label>
+            <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+              <input type="radio" name="q5" value="yes" style="display:none;">
+              <span>Yes</span>
+            </label>
+          </div>
+          <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+            Error:<br> This field is required.
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="quiz-submit-btn" style="margin-top:1.5rem;background:#6c5cff;color:#fff;font-weight:700;padding:0.9rem 2.2rem;border:none;border-radius:2rem;font-size:1.13rem;cursor:pointer;">Submit</button>
+    </form>
+  `;
+
+  container.innerHTML = html;
+
+  // Button selection styling and show/hide followup
+  const yesNoLabels = container.querySelectorAll('.quiz-q-option-btn');
+  yesNoLabels.forEach(label => {
+    const input = label.querySelector('input[type=radio]');
+    label.addEventListener('click', function(e) {
+      if (e.target.tagName === 'INPUT') return;
+      const name = input.name;
+      container.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+        i.parentElement.style.background = '#fff';
+        i.parentElement.style.color = '#27608a';
+        i.parentElement.style.borderColor = '#d1bfff';
+      });
+      input.checked = true;
+      label.style.background = '#3a1cff';
+      label.style.color = '#fff';
+      label.style.borderColor = '#3a1cff';
+      // Show/hide followup
+      if (name === 'q0') {
+        const followup = container.querySelector('#ptsd-followup-questions');
+        if (input.value === 'yes') {
+          followup.style.display = '';
+        } else {
+          followup.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // Form validation
+  container.querySelector('#ptsd-quiz-form').onsubmit = function(e) {
+    e.preventDefault();
+    let valid = true;
+    // Q0 required
+    const q0 = container.querySelector('input[name="q0"]:checked');
+    const q0Block = container.querySelectorAll('.quiz-q-block')[0];
+    const q0Error = q0Block.querySelector('.quiz-error');
+    if (!q0) {
+      valid = false;
+      q0Error.style.display = 'block';
+    } else {
+      q0Error.style.display = 'none';
+    }
+    // If yes, require all followups
+    if (q0 && q0.value === 'yes') {
+      for (let i = 1; i <= 5; i++) {
+        const qBlock = container.querySelectorAll('.quiz-q-block')[i];
+        const errorDiv = qBlock.querySelector('.quiz-error');
+        if (!container.querySelector(`input[name="q${i}"]:checked`)) {
+          valid = false;
+          errorDiv.style.display = 'block';
+        } else {
+          errorDiv.style.display = 'none';
+        }
+      }
+    }
+    if (valid) {
+      alert('Quiz submitted! (Handle results here)');
+      // Handle results here
+    }
+  };
+}
   // Call this function whenever you show the quiz section:
   if (document.querySelector('.quiz-section')) {
       renderQuizCollapsibleList();
@@ -1295,9 +1812,88 @@ showQuizPage = function(quizId) {
     renderAnxietyTestQuiz();
   } else if (quizId === 'bipolar') {
     renderBipolarTestQuiz();
+  } else if (quizId === 'psychosis') {
+    renderPsychosisTestQuiz();
+  } else if (quizId === 'adhd') {
+    renderADHDTestQuiz();
+  } else if (quizId === 'ptsd') {
+    renderPTSDTestQuiz();
   }
   // ...other quizzes
 }
+// --- Journal Section Logic ---
+const journals = [
+  { id: 1, title: "Bealzebub's Journal" },
+  { id: 2, title: "My Wellness Journey" },
+  { id: 3, title: "Gratitude Notes" }
+];
+
+function showJournalLanding() {
+  hideAllSections();
+  document.getElementById('journal-landing').style.display = '';
+  renderJournalBooks();
+}
+
+function renderJournalBooks() {
+  const grid = document.getElementById('journal-books-grid');
+  grid.innerHTML = '';
+  journals.forEach(journal => {
+    const card = document.createElement('div');
+    card.className = 'journal-book';
+    card.innerHTML = `
+      <div class="journal-book-spine"></div>
+      <div class="journal-book-title">${journal.title}</div>
+      <div class="journal-book-actions">
+        <button class="journal-book-action-btn" data-journal-id="${journal.id}" data-action="new-entry">New Entry</button>
+        <button class="journal-book-action-btn" data-journal-id="${journal.id}" data-action="view-entries">View Entries</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  // Add event listeners for buttons
+  grid.querySelectorAll('.journal-book-action-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const journalId = parseInt(btn.getAttribute('data-journal-id'));
+      const action = btn.getAttribute('data-action');
+      if (action === 'new-entry') {
+        showNewEntryModal(journalId);
+      } else if (action === 'view-entries') {
+        showViewEntriesModal(journalId);
+      }
+    });
+  });
+}
+
+function showNewEntryModal(journalId) {
+  document.getElementById('journal-new-entry-modal').style.display = 'flex';
+  // Placeholder content for now
+  document.getElementById('journal-new-entry-modal').innerHTML = `<div style="background:#fff;padding:2rem 2.5rem;border-radius:18px;min-width:340px;min-height:200px;">New Entry for Journal ID: ${journalId}<br><button onclick="document.getElementById('journal-new-entry-modal').style.display='none'">Close</button></div>`;
+}
+
+function showViewEntriesModal(journalId) {
+  const modal = document.getElementById('journal-view-entries-modal');
+  modal.style.display = 'flex';
+  renderViewEntries(journalId); // This should build the full UI
+}
+
+// Navigation for top bar
+if (document.getElementById('journal-back-dashboard')) {
+  document.getElementById('journal-back-dashboard').onclick = function() {
+    hideAllSections();
+    showDashboard();
+  };
+}
+if (document.getElementById('journal-tags-btn')) {
+  document.getElementById('journal-tags-btn').onclick = function() {
+    alert('Tags feature coming soon!');
+  };
+}
+if (document.getElementById('journal-new-journal-btn')) {
+  document.getElementById('journal-new-journal-btn').onclick = function() {
+    alert('New Journal feature coming soon!');
+  };
+}
+
     // --- Meditations Explorer SPA Logic ---
     let explorerData = [
         {
@@ -2489,7 +3085,7 @@ showQuizPage = function(quizId) {
         meditationsContent.innerHTML = `
         <div class="cbt-staying-on-top-section">
           <h2>Staying on top of things</h2>
-          <p>The techniques and strategies we use to improve how we feel when we're low, stressed or anxious can also be used to help us to stay well.</p>
+          <p>The techniques and strategies we use to improve how we're low, stressed or anxious can also be used to help us to stay well.</p>
           <p>The more you practise the techniques you have learnt, the more likely they are to become habits. Making caring for your mental wellbeing part of your routine can help you to protect your mental health and manage difficult situations or setbacks more easily.</p>
           <p>These 6 tips will help you combine everything you have learnt into a personal plan for staying well.</p>
           <div class="cbt-staying-on-top-anchors" style="background:#eaf6fa; border-radius:1.2rem; padding:1.5rem 2rem; margin:2.5rem 0 2rem 0;">
@@ -4657,10 +5253,10 @@ function renderSupportingOthersHelpingOthers() {
       <!-- Understanding how you might help someone -->
       <section id="understanding-help" style="background:#f6fae8;padding:2.2rem 1.5rem 1.5rem 1.5rem;margin-bottom:2.5rem;border-radius:1.2rem;">
           <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1.2rem;">Understanding how you might help someone</h3>
-          <p style="font-size:1.1rem;margin-bottom:1rem;">Many of us experience mental health problems at some time, so it’s likely we will know someone who will struggle with their mental health.</p>
+          <p style="font-size:1.1rem;margin-bottom:1rem;">Many of us experience mental health problems at some time, so it's likely we will know someone who will struggle with their mental health.</p>
           <p style="font-size:1.1rem;margin-bottom:1rem;">We can all feel <a href="#" style="color:#3973c2;text-decoration:underline;">anxious</a>, <a href="#" style="color:#3973c2;text-decoration:underline;">stressed</a> or <a href="#" style="color:#3973c2;text-decoration:underline;">low</a> at times, but it can be a problem if these feelings get worse, go on for a long time or affect our daily lives.</p>
           <p style="font-size:1.1rem;margin-bottom:1rem;">It might take time for someone's mental health to improve, and some of us may need professional help, but there are ways to help and support someone to get back to positive mental health. We also have advice if you're <a href="#" style="color:#3973c2;text-decoration:underline;">looking after a child or a young person's mental health</a>.</p>
-          <p style="font-size:1.1rem;">If you’re worried about a work colleague or employee, or want to learn more about mental health support in the workplace, <a href="#" style="color:#3973c2;text-decoration:underline;">Mental Health at Work</a> has relevant information and resources.</p>
+          <p style="font-size:1.1rem;">If you're worried about a work colleague or employee, or want to learn more about mental health support in the workplace, <a href="#" style="color:#3973c2;text-decoration:underline;">Mental Health at Work</a> has relevant information and resources.</p>
       </section>
 
       <!-- Ways you can help others -->
@@ -4692,7 +5288,7 @@ function renderSupportingOthersHelpingOthers() {
                   <img src="tip17.png" alt="Ear with speech bubble" style="width:60px;height:60px;flex-shrink:0;">
                   <div>
                       <h4 style="font-size:1.2rem;font-weight:700;margin-bottom:0.7rem;">Offer your time to listen</h4>
-                      <p style="font-size:1rem;">Listening is an important skill. Ask open questions that start with “how”, “what”, “where” or “when”. This can help people open up. Get <a href="#" style="color:#3973c2;text-decoration:underline;">Listening tips from the Samaritans</a>.</p>
+                      <p style="font-size:1rem;">Listening is an important skill. Ask open questions that start with "how", "what", "where" or "when". This can help people open up. Get <a href="#" style="color:#3973c2;text-decoration:underline;">Listening tips from the Samaritans</a>.</p>
                   </div>
               </div>
               <div style="background:#fff;padding:1.5rem;border-radius:1rem;display:flex;align-items:flex-start;gap:1rem;">
