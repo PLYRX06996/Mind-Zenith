@@ -1281,6 +1281,200 @@ function renderBipolarTestQuiz(containerSelector = '.quiz-page-content') {
     }
   };
 }
+
+function renderPsychosisTestQuiz(containerSelector = '.quiz-page-content') {
+  const questions = [
+    "Do familiar surroundings sometimes seem strange, confusing, threatening or unreal to you?",
+    "Have you heard unusual sounds like banging, clicking, hissing, clapping or ringing in your ears?",
+    "Do things that you see appear different from the way they usually do?",
+    "Have you had experiences with telepathy, psychic forces, or fortune telling?",
+    "Have you felt that you are not in control of your own ideas or thoughts?",
+    "Do you have difficulty getting your point across, because you ramble or go off the track a lot when you talk?",
+    "Do you have strong feelings or beliefs about being unusually gifted or talented in some way?",
+    "Do you feel that other people are watching you or talking about you?",
+    "Do you sometimes get strange feelings on or just beneath your skin, like bugs crawling?",
+    "Do you sometimes feel suddenly distracted by distant sounds that you are not normally aware of?",
+    "Have you had the sense that some person or force is around you, although you couldn't see anyone?",
+    "Do you worry at times that something may be wrong with your mind?",
+    "Have you ever felt that you don't exist, the world does not exist, or that you are dead?",
+    "Have you been confused at times whether something you experienced was real or imaginary?",
+    "Do you hold beliefs that other people would find unusual or bizarre?",
+    "Do you feel that parts of your body have changed in some way, or that parts of your body are working differently?",
+    "Are your thoughts sometimes so strong that you can almost hear them?",
+    "Do you find yourself feeling mistrustful or suspicious of other people?",
+    "Have you seen unusual things like flashes, flames, blinding light, or geometric figures?",
+    "Have you seen things that other people can't see or don't seem to see?",
+    "Do people sometimes find it hard to understand what you are saying?"
+  ];
+
+  const distressOptions = [
+    "Not distressing",
+    "Mildly distressing", 
+    "Moderately distressing",
+    "Severely distressing",
+    "Extremely distressing"
+  ];
+
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  let html = `
+    <h2 class="dashboard-title card-title" style="margin-bottom:1.2rem;">Psychosis & Schizophrenia Test</h2>
+    <div class="card-desc" style="margin-bottom:2rem;">
+      Have you recently had the following thoughts, feelings, or experiences? Check "yes" or "no" for each item.<br><br>
+      Do not include experiences that occur only while under the influence of alcohol, drugs or medications that were not prescribed to you.<br><br>
+      If you answer "YES" to an item, also indicate how distressing that experience has been for you.<br><br>
+      <span style="color:#b00;font-weight:600;">Please note, all fields are required.</span><br><br>
+      <strong>In the past month...</strong>
+    </div>
+    <form id="psychosis-quiz-form" autocomplete="off">
+  `;
+
+  questions.forEach((q, i) => {
+    html += `
+      <div class="quiz-q-block" style="margin-bottom:2.2rem;">
+        <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">${i+1}. ${q}</div>
+        <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+            <input type="radio" name="q${i+1}" value="no" style="display:none;">
+            <span>No</span>
+          </label>
+          <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+            <input type="radio" name="q${i+1}" value="yes" style="display:none;">
+            <span>Yes</span>
+          </label>
+        </div>
+        <div class="quiz-distress-section" style="display:none;margin-left:1.2rem;">
+          <div style="font-weight:600;margin-bottom:0.8rem;color:#6c5cff;">How distressing has this experience been for you?</div>
+          <div class="quiz-distress-options" style="display:flex;gap:0.8rem;flex-wrap:wrap;">`;
+    
+    distressOptions.forEach((opt, j) => {
+      html += `
+        <label class="quiz-distress-option-btn" style="border:1.5px solid #ffb3ba;border-radius:1.5rem;padding:0.5rem 1rem;cursor:pointer;font-weight:500;font-size:0.95rem;color:#8B4513;background:#fff;transition:all 0.15s;">
+          <input type="radio" name="q${i+1}_distress" value="${j}" style="display:none;">
+          <span>${opt}</span>
+        </label>
+      `;
+    });
+
+    html += `
+          </div>
+        </div>
+        <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+          Error:<br> This field is required.
+        </div>
+        <div class="quiz-distress-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+          Error:<br> Please indicate how distressing this experience has been.
+        </div>
+      </div>
+    `;
+  });
+
+  html += `
+    <button type="submit" class="quiz-submit-btn" style="margin-top:1.5rem;background:#6c5cff;color:#fff;font-weight:700;padding:0.9rem 2.2rem;border:none;border-radius:2rem;font-size:1.13rem;cursor:pointer;">Submit</button>
+    </form>
+  `;
+
+  container.innerHTML = html;
+
+  // Button selection styling for main yes/no options
+  container.querySelectorAll('.quiz-q-option-btn').forEach(label => {
+    const input = label.querySelector('input[type=radio]');
+    label.addEventListener('click', function(e) {
+      e.preventDefault();
+      const questionBlock = label.closest('.quiz-q-block');
+      const allOptions = questionBlock.querySelectorAll('.quiz-q-option-btn');
+      
+      allOptions.forEach(opt => {
+        opt.style.background = '#fff';
+        opt.style.color = '#27608a';
+        opt.style.borderColor = '#d1bfff';
+      });
+      
+      label.style.background = '#6c5cff';
+      label.style.color = '#fff';
+      label.style.borderColor = '#6c5cff';
+      input.checked = true;
+
+      // Show/hide distress section based on answer
+      const distressSection = questionBlock.querySelector('.quiz-distress-section');
+      if (input.value === 'yes') {
+        distressSection.style.display = 'block';
+      } else {
+        distressSection.style.display = 'none';
+        // Clear distress selection if hiding
+        distressSection.querySelectorAll('input[type=radio]').forEach(radio => radio.checked = false);
+        distressSection.querySelectorAll('.quiz-distress-option-btn').forEach(btn => {
+          btn.style.background = '#fff';
+          btn.style.color = '#8B4513';
+          btn.style.borderColor = '#ffb3ba';
+        });
+      }
+    });
+  });
+
+  // Button selection styling for distress options
+  container.querySelectorAll('.quiz-distress-option-btn').forEach(label => {
+    const input = label.querySelector('input[type=radio]');
+    label.addEventListener('click', function(e) {
+      e.preventDefault();
+      const distressSection = label.closest('.quiz-distress-section');
+      const allDistressOptions = distressSection.querySelectorAll('.quiz-distress-option-btn');
+      
+      allDistressOptions.forEach(opt => {
+        opt.style.background = '#fff';
+        opt.style.color = '#8B4513';
+        opt.style.borderColor = '#ffb3ba';
+      });
+      
+      label.style.background = '#ff6b6b';
+      label.style.color = '#fff';
+      label.style.borderColor = '#ff6b6b';
+      input.checked = true;
+    });
+  });
+
+  // Form submission
+  const form = container.querySelector('#psychosis-quiz-form');
+  form.onsubmit = function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    questions.forEach((q, i) => {
+      const qBlock = container.querySelector(`.quiz-q-block:nth-child(${i+1})`);
+      const errorDiv = qBlock.querySelector('.quiz-error');
+      const distressErrorDiv = qBlock.querySelector('.quiz-distress-error');
+      const mainAnswer = container.querySelector(`input[name="q${i+1}"]:checked`);
+      
+      // Check main question
+      if (!mainAnswer) {
+        valid = false;
+        errorDiv.style.display = 'block';
+      } else {
+        errorDiv.style.display = 'none';
+        
+        // If answered "yes", check distress level
+        if (mainAnswer.value === 'yes') {
+          const distressAnswer = container.querySelector(`input[name="q${i+1}_distress"]:checked`);
+          if (!distressAnswer) {
+            valid = false;
+            distressErrorDiv.style.display = 'block';
+          } else {
+            distressErrorDiv.style.display = 'none';
+          }
+        } else {
+          distressErrorDiv.style.display = 'none';
+        }
+      }
+    });
+
+    if (valid) {
+      alert('Psychosis test submitted! (Handle results here)');
+      // Handle results here
+    }
+  };
+}
+
   // Call this function whenever you show the quiz section:
   if (document.querySelector('.quiz-section')) {
       renderQuizCollapsibleList();
@@ -1295,6 +1489,8 @@ showQuizPage = function(quizId) {
     renderAnxietyTestQuiz();
   } else if (quizId === 'bipolar') {
     renderBipolarTestQuiz();
+  } else if (quizId === 'psychosis') {
+    renderPsychosisTestQuiz();
   }
   // ...other quizzes
 }
