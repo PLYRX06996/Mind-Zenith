@@ -1112,6 +1112,137 @@ function renderAnxietyTestQuiz(containerSelector = '.quiz-page-content') {
     }
   };
 }
+
+function renderADHDTestQuiz(containerSelector = '.quiz-page-content') {
+  const questions = [
+    "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?",
+    "How often do you have difficulty getting things in order when you have to do a task that requires organization?",
+    "How often do you have problems remembering appointments or obligations?",
+    "When you have a task that requires a lot of thought, how often do you avoid or delay getting started?",
+    "How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?",
+    "How often do you feel overly active and compelled to do things, like you were driven by a motor?",
+    "How often do you make careless mistakes when you have to work on a boring or difficult project?",
+    "How often do you have difficulty keeping your attention when you are doing boring or repetitive work?",
+    "How often do you have difficulty concentrating on what people say to you, even when they are speaking to you directly?",
+    "How often do you misplace or have difficulty finding things at home or at work?",
+    "How often are you distracted by activity or noise around you?",
+    "How often do you leave your seat in meetings or other situations in which you are expected to remain seated?",
+    "How often do you feel restless or fidgety?",
+    "How often do you have difficulty unwinding and relaxing when you have time to yourself?",
+    "How often do you find yourself talking too much when you are in social situations?",
+    "When you're in a conversation, how often do you find yourself finishing the sentences of the people you are talking to, before they can finish them themselves?",
+    "How often do you have difficulty waiting your turn in situations when turn taking is required?",
+    "How often do you interrupt others when they are busy?"
+  ];
+  
+  const options = [
+    "Never",
+    "Rarely", 
+    "Sometimes",
+    "Often",
+    "Very Often"
+  ];
+  
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  let html = `
+    <h2 class="dashboard-title card-title" style="margin-bottom:1.2rem;">ADHD Test</h2>
+    <div class="card-desc" style="margin-bottom:2rem;">Please answer the questions below, rating yourself on each of the criteria shown. As you answer each question, select the button that best describes how you have felt and conducted yourself over the past 6 months.<br><span style="color:#b00;font-weight:600;">Please note, all fields are required.</span></div>
+    <form id="adhd-quiz-form" autocomplete="off">
+  `;
+
+  questions.forEach((q, i) => {
+    html += `<div class="quiz-q-block" style="margin-bottom:2.2rem;">
+      <div class="quiz-q-label" style="font-size:1.13rem;font-weight:600;margin-bottom:1rem;">${i+1}. ${q}</div>
+      <div class="quiz-q-options" style="display:flex;gap:1rem;flex-wrap:wrap;">`;
+    options.forEach((opt, j) => {
+      html += `
+        <label class="quiz-q-option-btn" style="border:1.5px solid #d1bfff;border-radius:2rem;padding:0.7rem 1.5rem;cursor:pointer;font-weight:600;font-size:1.07rem;color:#27608a;background:#fff;transition:all 0.15s;">
+          <input type="radio" name="q${i+1}" value="${j}" style="display:none;">
+          <span>${opt}</span>
+        </label>
+      `;
+    });
+    html += `</div>
+      <div class="quiz-error" style="display:none;margin-top:1.2rem;padding:1.1rem 1.2rem;border:2px solid #d13a5e;color:#d13a5e;border-radius:2rem;font-weight:600;background:#fff;">
+        Error:<br> This field is required.
+      </div>
+    </div>`;
+  });
+
+  html += `
+    <button type="submit" class="quiz-submit-btn" style="margin-top:1.5rem;background:#6c5cff;color:#fff;font-weight:700;padding:0.9rem 2.2rem;border:none;border-radius:2rem;font-size:1.13rem;cursor:pointer;">Submit</button>
+    </form>
+  `;
+
+  container.innerHTML = html;
+
+  // Button selection styling
+  container.querySelectorAll('.quiz-q-option-btn').forEach(label => {
+    const input = label.querySelector('input[type=radio]');
+    label.addEventListener('click', function(e) {
+      if (e.target.tagName === 'INPUT') return;
+      const name = input.name;
+      container.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+        i.parentElement.style.background = '#fff';
+        i.parentElement.style.color = '#27608a';
+        i.parentElement.style.borderColor = '#d1bfff';
+      });
+      input.checked = true;
+      label.style.background = '#3a1cff';
+      label.style.color = '#fff';
+      label.style.borderColor = '#3a1cff';
+    });
+  });
+
+  // Form validation
+  container.querySelector('#adhd-quiz-form').onsubmit = function(e) {
+    e.preventDefault();
+    let valid = true;
+    for (let i = 1; i <= 18; i++) {
+      const qBlock = container.querySelectorAll('.quiz-q-block')[i-1];
+      const errorDiv = qBlock.querySelector('.quiz-error');
+      if (!container.querySelector(`input[name="q${i}"]:checked`)) {
+        valid = false;
+        errorDiv.style.display = 'block';
+      } else {
+        errorDiv.style.display = 'none';
+      }
+    }
+    if (valid) {
+      // Calculate ADHD score
+      let totalScore = 0;
+      for (let i = 1; i <= 18; i++) {
+        const checked = container.querySelector(`input[name="q${i}"]:checked`);
+        if (checked) {
+          totalScore += parseInt(checked.value);
+        }
+      }
+      
+      // Show results based on score
+      let resultMessage = '';
+      let resultLevel = '';
+      
+      if (totalScore >= 0 && totalScore <= 17) {
+        resultLevel = 'Low';
+        resultMessage = 'Your responses suggest a low likelihood of ADHD symptoms. However, if you\'re experiencing difficulties in your daily life, consider speaking with a healthcare professional.';
+      } else if (totalScore >= 18 && totalScore <= 35) {
+        resultLevel = 'Moderate';
+        resultMessage = 'Your responses suggest some ADHD symptoms that may be affecting your daily life. Consider discussing these results with a healthcare professional for a proper evaluation.';
+      } else if (totalScore >= 36 && totalScore <= 54) {
+        resultLevel = 'High';
+        resultMessage = 'Your responses suggest significant ADHD symptoms. It is recommended that you speak with a healthcare professional for a comprehensive evaluation and potential treatment options.';
+      } else {
+        resultLevel = 'Very High';
+        resultMessage = 'Your responses suggest very significant ADHD symptoms that may be considerably impacting your daily functioning. It is strongly recommended that you seek professional evaluation as soon as possible.';
+      }
+      
+      alert(`ADHD Assessment Results\n\nScore: ${totalScore}/72\nLevel: ${resultLevel}\n\n${resultMessage}\n\nDisclaimer: This assessment is for educational purposes only and should not replace professional medical advice. Please consult with a qualified healthcare provider for proper diagnosis and treatment.`);
+    }
+  };
+}
+
 function renderBipolarTestQuiz(containerSelector = '.quiz-page-content') {
   const container = document.querySelector(containerSelector);
   if (!container) return;
@@ -1293,6 +1424,8 @@ showQuizPage = function(quizId) {
     renderDepressionTestQuiz();
   } else if (quizId === 'anxiety') {
     renderAnxietyTestQuiz();
+  } else if (quizId === 'adhd') {
+    renderADHDTestQuiz();
   } else if (quizId === 'bipolar') {
     renderBipolarTestQuiz();
   }
