@@ -1015,7 +1015,7 @@ body {
         gap: 1.2rem;
 }
     .dashboard-stat-card {
-        max-width: 100%;
+    max-width: 100%;
         min-width: 0;
 }
 }
@@ -1109,12 +1109,12 @@ body {
         max-width: 100%;
         height: 220px !important;
     }
-    .card-title {
+.card-title {
         font-size: 2rem;
         margin-left: 1rem;
     }
     .card-subtitle {
-        font-size: 1.5rem;
+    font-size: 1.5rem;
     }
 }
 
@@ -1200,7 +1200,7 @@ body {
     transition: background 0.15s, color 0.15s;
     box-shadow: 0 2px 8px rgba(122,108,255,0.10);
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-}
+    }
 .profile-btn:hover {
     background: #6c63ff;
     }
@@ -1217,7 +1217,7 @@ body {
     margin-bottom: 0.3rem;
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     letter-spacing: 0.01em;
-}
+    }
 .profile-input {
     font-size: 1.08rem;
     padding: 0.6rem 1.2rem;
@@ -1229,7 +1229,7 @@ body {
     color: #444;
     outline: none;
     transition: border 0.15s;
-}
+    }
 .profile-input:focus {
     border: 1.5px solid #7a6cff;
 }
@@ -1346,10 +1346,10 @@ input:checked + .slider:before {
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
     box-shadow: 0 2px 8px rgba(255,106,106,0.10);
-}
+    }
 .profile-delete-btn:hover {
     background: #e04a4a;
-}
+    }
 @media (max-width: 1100px) {
     .profile-settings-cards {
         flex-direction: column;
@@ -1365,9 +1365,9 @@ input:checked + .slider:before {
         padding: 1.2rem 0.5rem 2rem 0.5rem;
 }
     .profile-settings-title {
-        font-size: 1.5rem;
+    font-size: 1.5rem;
         margin-left: 0.5rem;
-    }
+}
     .profile-settings-cards {
         gap: 0.7rem;
 }
@@ -1384,7 +1384,7 @@ input:checked + .slider:before {
     .profile-btn {
         font-size: 0.95rem;
         padding: 0.4rem 1rem;
-    }
+}
     .profile-link {
         font-size: 0.95rem;
 }
@@ -1403,7 +1403,7 @@ input:checked + .slider:before {
     border-radius: 28px;
     box-shadow: 0 8px 32px rgba(122,108,255,0.10), 0 1.5px 6px rgba(44,62,80,0.10);
     display: flex;
-        flex-direction: column;
+    flex-direction: column;
     align-items: flex-start;
     position: relative;
 }
@@ -1502,7 +1502,7 @@ input:checked + .slider:before {
     }
     .change-password-card {
         margin-top: 1.2rem;
-    }
+}
     .change-password-form {
         padding: 1.2rem 0.7rem 1rem 0.7rem;
         min-width: 0;
@@ -1702,7 +1702,7 @@ input:checked + .slider:before {
         height: 48px;
     }
     .achievement-badge-title {
-        font-size: 1rem;
+    font-size: 1rem;
     }
 }
 
@@ -1748,7 +1748,7 @@ input:checked + .slider:before {
 }
 @media (max-width: 900px) {
     .store-title, .logout-title {
-        font-size: 2rem;
+    font-size: 2rem;
         margin-left: 1rem;
     }
 }
@@ -1769,7 +1769,7 @@ input:checked + .slider:before {
     margin: 2.2rem auto 2.5rem auto;
     background: none;
     display: flex;
-    flex-direction: column;
+        flex-direction: column;
     align-items: center;
     gap: 0.7rem;
 }
@@ -1960,7 +1960,7 @@ input:checked + .slider:before {
 @media (max-width: 700px) {
     .store-xp-bar-container {
         padding: 0 0.5rem;
-}
+    }
     .store-xp-bar-bg {
         height: 32px;
     }
@@ -1971,7 +1971,7 @@ input:checked + .slider:before {
     .store-item-img {
         width: 48px;
         height: 48px;
-}
+    }
 }
 
 /* --- Store How It Works Info --- */
@@ -2018,7 +2018,7 @@ input:checked + .slider:before {
     .store-how-it-works {
         font-size: 0.98rem;
         padding: 0.7rem 0.7rem 0.7rem 0.7rem;
-        max-width: 100%;
+    max-width: 100%;
     }
     .how-it-works-title {
         font-size: 0.98rem;
@@ -2030,22 +2030,22 @@ input:checked + .slider:before {
 
 /* --- Auth/Logout Section Two-Panel UI --- */
 .auth-container {
-  display: flex;
+    display: flex;
   max-width: 820px;
   margin: 3rem auto;
   background: rgba(255,255,255,0.7);
   border-radius: 2rem;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-  overflow: hidden;
+    overflow: hidden;
   min-height: 420px;
-  position: relative;
+    position: relative;
 }
 .auth-panel {
   flex: 1 1 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+        flex-direction: column;
+    justify-content: center;
+    align-items: center;
   padding: 2.5rem 2rem;
   min-width: 0;
 }
@@ -2066,9 +2066,9 @@ input:checked + .slider:before {
 .auth-title, .auth-panel-title {
   font-family: 'Dancing Script', 'Pacifico', cursive, sans-serif;
   font-size: 2.1rem;
-  font-weight: 700;
+    font-weight: 700;
   color: #7a6cff;
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 .auth-panel-desc, .auth-or {
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -2078,15 +2078,15 @@ input:checked + .slider:before {
   display: block;
 }
 .auth-form {
-  width: 100%;
+    width: 100%;
   max-width: 320px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+    display: flex;
+        flex-direction: column;
   gap: 1.1rem;
 }
 .auth-input-row {
-  width: 100%;
+    width: 100%;
 }
 .auth-input {
   width: 100%;
@@ -2096,7 +2096,7 @@ input:checked + .slider:before {
   background: rgba(255,255,255,0.65);
   font-size: 1rem;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  color: #333;
+    color: #333;
   box-shadow: 0 2px 8px 0 rgba(122,108,255,0.04);
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
@@ -2108,16 +2108,16 @@ input:checked + .slider:before {
 .auth-submit-btn, .auth-switch-btn {
   width: 100%;
   padding: 0.9rem 0;
-  border-radius: 2rem;
+    border-radius: 2rem;
   border: none;
   background: linear-gradient(90deg, #7a6cff 60%, #6ccfff 100%);
   color: #fff;
   font-size: 1.1rem;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  font-weight: 600;
+    font-weight: 600;
   letter-spacing: 0.04em;
   box-shadow: 0 2px 12px 0 rgba(122,108,255,0.10);
-  cursor: pointer;
+    cursor: pointer;
   margin-top: 0.5rem;
   transition: background 0.2s, box-shadow 0.2s, color 0.2s;
 }
@@ -2130,12 +2130,12 @@ input:checked + .slider:before {
 }
 .auth-submit-btn:hover, .auth-switch-btn:hover {
   background: linear-gradient(90deg, #6ccfff 0%, #7a6cff 100%);
-  color: #fff;
+    color: #fff;
   box-shadow: 0 4px 16px 0 rgba(122,108,255,0.13);
 }
 .auth-switch-btn:hover {
   background: #7a6cff;
-  color: #fff;
+    color: #fff;
 }
 .auth-forgot {
   display: block;
@@ -2157,7 +2157,7 @@ input:checked + .slider:before {
     border-radius: 0 !important;
     box-shadow: none !important;
     padding: 2rem 1rem;
-  }
+}
   .auth-panel-left, .auth-panel-right {
     border-radius: 0 !important;
   }
@@ -2166,12 +2166,356 @@ input:checked + .slider:before {
   .auth-container {
     margin: 1.2rem auto;
     border-radius: 1.2rem;
-  }
+}
   .auth-title, .auth-panel-title {
     font-size: 1.3rem;
-  }
+}
   .auth-form {
     max-width: 98vw;
   }
+}
+
+/* --- Meditations Section Layout (Dense, Full Width) --- */
+.meditations-section {
+    margin-top: 0.5rem;
+    width: 100vw;
+    max-width: 100vw;
+    padding: 0 0.5vw;
+}
+.meditations-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    gap: 1.2rem;
+    position: relative;
+}
+.meditations-header-row .back-dashboard-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0.5rem;
+    z-index: 1;
+}
+.meditations-title {
+    font-size: 2.7rem;
+    color: #6c5cff;
+    margin: 0 auto;
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+    flex: 1;
+}
+.meditations-layout {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 0.5rem;
+    min-height: 70vh;
+    width: 100%;
+    max-width: 100vw;
+    align-items: stretch;
+    justify-content: center;
+}
+.meditations-explorer {
+    min-width: 270px;
+    max-width: 340px;
+    height: 80vh;
+    max-height: 80vh;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 4px 24px 0 rgba(122,108,255,0.10), 0 1.5px 6px rgba(44,62,80,0.08);
+    border-radius: 1.5rem;
+    padding: 1.2rem 0.7rem 1.2rem 1.2rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.35rem;
+    color: #6c5cff;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    overflow-y: auto;
+}
+.meditations-content {
+    flex: 1 1 0%;
+    background: rgba(255,255,255,0.98);
+    box-shadow: 0 8px 32px 0 rgba(122,108,255,0.10), 0 1.5px 6px rgba(44,62,80,0.08);
+    border-radius: 1.5rem;
+    padding: 2.2rem 2rem;
+    min-height: 320px;
+    min-width: 400px;
+    width: 80vw;
+    max-width: 1500px;
+    height: 80vh;
+    max-height: 80vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0 auto;
+    overflow-y: auto;
+}
+@media (max-width: 1100px) {
+    .meditations-content {
+        max-width: 100vw;
+        padding: 1.2rem 0.5rem;
+        min-width: 0;
+}
+    .meditations-explorer {
+        min-width: 180px;
+        max-width: 250px;
+    }
+}
+@media (max-width: 900px) {
+    .meditations-layout {
+        flex-direction: column;
+        gap: 1.2rem;
+        align-items: stretch;
+}
+    .meditations-explorer {
+        max-width: 100%;
+        min-width: 0;
+        flex-direction: row;
+        gap: 1.2rem;
+        padding: 1rem 0.5rem;
+        border-radius: 1rem;
+        font-size: 1.1rem;
+        height: auto;
+        max-height: none;
+    }
+    .meditations-content {
+        padding: 1.2rem 0.7rem;
+        border-radius: 1rem;
+        height: auto;
+        max-height: none;
+        min-width: 0;
+    }
+}
+
+.quiz-warning {
+    color: #d32f2f;
+    background: #fff3f3;
+    border-radius: 0.7rem;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    border: 1px solid #f8bdbd;
+    text-align: left;
+    display: none;
+}
+
+.mind-plan-intro {
+    background: linear-gradient(135deg, #f7f7ff 60%, #eaf6fa 100%);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(122,108,255,0.10), 0 1.5px 6px rgba(44,62,80,0.08);
+    padding: 2.5rem 2rem 2.5rem 2rem;
+    margin: 0 auto;
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+}
+.mind-plan-intro h2, .mind-plan-intro h3, .mind-plan-intro h4 {
+    color: #6c5cff;
+    font-family: 'Dancing Script', cursive;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+}
+.mind-plan-intro h3 {
+    font-size: 2rem;
+}
+.mind-plan-intro h4 {
+    font-size: 1.3rem;
+    margin-top: 2.2rem;
+}
+.mind-plan-intro p {
+    margin-bottom: 1.2rem;
+    font-size: 1.13rem;
+    color: #333;
+    line-height: 1.7;
+}
+.mind-plan-intro ul.mind-plan-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 1.2rem 0 1.2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+.mind-plan-intro ul.mind-plan-benefits li {
+    font-size: 1.13rem;
+    color: #6c5cff;
+    font-family: 'Satisfy', cursive;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+.mind-plan-intro .mind-plan-start-btn {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(90deg, #7a6cff 0%, #6ccfff 100%);
+    border: none;
+    border-radius: 2rem;
+    box-shadow: 0 4px 16px rgba(122,108,255,0.13);
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+    margin: 1.2rem 0 1.2rem 0;
+}
+.mind-plan-intro .mind-plan-start-btn:hover {
+    background: linear-gradient(90deg, #6ccfff 0%, #7a6cff 100%);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(122,108,255,0.18);
+}
+.mind-plan-intro ol.mind-plan-steps {
+    margin: 1.2rem 0 1.2rem 1.2rem;
+    color: #444;
+    font-size: 1.08rem;
+    line-height: 1.6;
+}
+.mind-plan-intro .mind-plan-info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+.mind-plan-intro .mind-plan-cloud, .mind-plan-intro .mind-plan-expert, .mind-plan-intro .mind-plan-warning {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(122,108,255,0.07);
+    padding: 1.1rem 1.5rem;
+    font-size: 1.05rem;
+    color: #444;
+    flex: 1 1 220px;
+    min-width: 220px;
+    max-width: 320px;
+}
+.mind-plan-intro .mind-plan-warning {
+    background: #fff3f3;
+    color: #d32f2f;
+    border: 1px solid #f8bdbd;
+}
+.mind-plan-intro .mind-plan-warning.yellow {
+    background: #fffbe6;
+    color: #bfa100;
+    border: 1px solid #ffe066;
+}
+.mind-plan-intro .self-help-link {
+    color: #6c5cff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+}
+.mind-plan-intro .self-help-link:hover {
+    color: #ff6a6a;
+}
+@media (max-width: 900px) {
+    .mind-plan-intro {
+        padding: 1.2rem 0.7rem;
+        max-width: 98vw;
+    }
+    .mind-plan-intro .mind-plan-info-cards {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+}
+
+.explorer-file, .explorer-folder {
+    cursor: pointer;
+}
+
+.anxiety-tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.2rem 2.5rem;
+    margin-top: 2.2rem;
+}
+.anxiety-tip-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+    background: #fff;
+    border-radius: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 1.1rem 1.1rem 0.7rem 1.1rem;
+    min-height: 90px;
+}
+.anxiety-tip-card img {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+.anxiety-tip-card-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+.anxiety-tip-card-desc {
+    margin-top: 0.2rem;
+    color: #222;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+@media (max-width: 900px) {
+    .anxiety-tips-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    .anxiety-tip-card {
+        padding: 1rem 0.8rem 0.7rem 0.8rem;
+    }
+}
+
+.anxiety-main-content-bg {
+    background: #f7fbe9;
+    border-radius: 1.3rem;
+    padding: 2.2rem 2.2rem 2.5rem 2.2rem;
+    margin: 2.5rem 0 2.5rem 0;
+    box-shadow: 0 2px 12px rgba(122,108,255,0.07);
+}
+.anxiety-section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 2.2rem;
+    margin-bottom: 0.7rem;
+    color: #2d1582;
+    letter-spacing: 0.01em;
+}
+.anxiety-main-content ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+.anxiety-main-content h2 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: #2d1582;
+}
+.anxiety-main-content p {
+    font-size: 1.08rem;
+    margin-bottom: 0.7rem;
+    color: #222;
+}
+@media (max-width: 900px) {
+    .anxiety-main-content-bg {
+        padding: 1.2rem 0.7rem 1.5rem 0.7rem;
+        margin: 1.2rem 0 1.2rem 0;
+    }
+    .anxiety-main-content h2 {
+        font-size: 1.5rem;
+    }
+    .anxiety-section-title {
+        font-size: 1.1rem;
+    }
 }
 

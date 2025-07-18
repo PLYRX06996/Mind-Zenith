@@ -37,24 +37,24 @@
                 <img src="Avatars/thor.png" alt="Profile Icon" class="profile-avatar-img clickable-img" id="header-profile-avatar">
             </div>
         </div>
-        <div class="profile-dropdown" id="profile-dropdown">
-            <div class="profile-header">
+    <div class="profile-dropdown" id="profile-dropdown">
+        <div class="profile-header">
                 <img src="Avatars/thor.png" alt="Profile Avatar" id="dropdown-profile-avatar">
                 <h3>Welcome Back,<br><span id="dropdown-display-name">MindZenithUser</span>!</h3>
-                <p>Level 5 Explorer</p>
-            </div>
-            <ul>
-                <li><a href="#">Profile Settings</a></li>
-                <li><a href="#">Achievements</a></li>
-                <li><a href="#">Store</a></li>
-                <li><a href="#">Log Out</a></li>
-            </ul>
+            <p>Level 5 Explorer</p>
         </div>
+        <ul>
+            <li><a href="#">Profile Settings</a></li>
+            <li><a href="#">Achievements</a></li>
+                <li><a href="#">Store</a></li>
+            <li><a href="#">Log Out</a></li>
+        </ul>
+    </div>
     </header>
     <main>
         <section class="hero-section">
             <div class="hero-bg"></div>
-            <div class="hero-content">
+                <div class="hero-content">
                 <h1 class="hero-title">Mind Zenith</h1>
                 <h2 class="hero-subtitle">Elevate your mind. Gamify your wellness.</h2>
                 <p class="hero-desc">A playful, science-backed journey to better mental health. Log your moods, complete daily challenges, earn XP, and unlock badges—all in one app.</p>
@@ -69,7 +69,7 @@
             <div class="wmh-cards">
                 <div class="wmh-card">
                     Every one of us carries an inner world of thoughts, feelings, and habits.
-                </div>
+                    </div>
                 <div class="wmh-card">
                     When we pay attention to that world—track our moods, reflect on our wins and struggles, and build tiny daily habits—we gain:
                     <ul class="wmh-list">
@@ -77,8 +77,8 @@
                         <li>✨ Resilience in the face of stress</li>
                         <li>✨ Balance between mind and body</li>
                         <li>✨ Joy in small, consistent wins</li>
-                    </ul>
-                </div>
+                            </ul>
+                        </div>
                 <div class="wmh-card">
                     At Mind Zenith, we believe self-care shouldn't feel like a chore. That's why we turn reflection into play.
                 </div>
@@ -91,7 +91,7 @@
                     Empowering each other, sharing wins, and spreading motivation! The Community Wall is where you can showcase your achievements, inspire others, and celebrate progress together. Enable your badges to be visible and join the movement of positive change!
                 </p>
                 <a href="#" class="community-wall-btn">Enter Community Wall</a>
-            </div>
+                    </div>
         </section>
         <section class="dashboard-section" style="display:none;">
             <h2 class="dashboard-title">Your Wellness Journey Overview</h2>
@@ -109,7 +109,7 @@
                         <span class="streak-count">6<br><span class="streak-days">days</span></span>
                     </div>
                     <div class="streak-sub">Current Week's Streak</div>
-                </div>
+                    </div>
                 <div class="dashboard-card xp-card">
                     <div class="xp-title">XP Progress</div>
                     <div class="xp-progress">
@@ -117,20 +117,20 @@
                         <div class="xp-level" id="xp-level">V</div>
                     </div>
                     <div class="xp-points" id="xp-points">6/100 XP</div>
-                </div>
+                    </div>
                 <div class="dashboard-card journal-card">
                     <div class="journal-icon">📖</div>
                     <div class="journal-title">Journal Library</div>
                     <div class="journal-desc">Collection of all your journals</div>
                     <a href="#" class="journal-link">View Journals <span class="arrow">➔</span></a>
-                </div>
+                    </div>
                 <div class="dashboard-card log-card">
                     <div class="log-icon">📝</div>
                     <div class="log-title">Log Diary</div>
                     <div class="log-desc">See all your daily log entries</div>
                     <a href="#" class="log-link">View Logs <span class="arrow">➔</span></a>
-                </div>
-            </div>
+                    </div>
+                    </div>
             <div class="dashboard-stats">
                 <div class="dashboard-stat-card">
                     <div class="stat-title">Weekly Daily Stress Level</div>
@@ -139,17 +139,17 @@
                 <div class="dashboard-stat-card">
                     <div class="stat-title">Weekly Daily Average Mood Level</div>
                     <canvas id="stat-mood-chart"></canvas>
-                </div>
+                    </div>
                 <div class="dashboard-stat-card">
                     <div class="stat-title">Weekly Daily Sleep</div>
                     <canvas id="stat-sleep-chart"></canvas>
-                </div>
+                    </div>
                 <div class="dashboard-stat-card">
                     <div class="stat-title">Monthly Weekly Number of Journals</div>
                     <canvas id="stat-journals-chart"></canvas>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
         <section class="journal-section card-centered-section" style="display:none;">
             <button class="back-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
             <h2 class="dashboard-title card-title">Journal Library</h2>
@@ -157,7 +157,7 @@
                 <h3 class="card-subtitle">Collection of all your journals</h3>
                 <p class="card-desc">Your journal entries will appear here.</p>
                 <span class="card-icon" style="font-size:3.5rem;">📚</span>
-            </div>
+                    </div>
         </section>
         <section class="log-section card-centered-section" style="display:none;">
             <button class="back-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
@@ -166,7 +166,7 @@
                 <h3 class="card-subtitle">See all your daily log entries</h3>
                 <p class="card-desc">Your daily log entries will appear here.</p>
                 <span class="card-icon" style="font-size:3.5rem;">📝</span>
-            </div>
+                    </div>
         </section>
         <section class="profile-settings-section card-centered-section" style="display:none;">
             <button class="back-dashboard-btn" id="back-to-dashboard-btn">&#8592; Back to Dashboard</button>
@@ -224,7 +224,7 @@
                     <input type="password" id="confirm-password" class="change-input" autocomplete="new-password">
                     <button class="change-password-btn" type="submit">Change Password</button>
                 </form>
-            </div>
+                    </div>
         </section>
         <section class="achievements-section card-centered-section" style="display:none;">
             <button class="back-dashboard-btn back-to-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
@@ -241,7 +241,7 @@
                 </div>
                 <div class="store-xp-bar-bg">
                     <div class="store-xp-bar-fill" id="store-xp-bar-fill"></div>
-                </div>
+                        </div>
                 <div class="store-xp-wallet">
                     <span class="wallet-label">Total XP Wallet:</span>
                     <span class="wallet-value" id="store-xp-wallet">650</span>
@@ -251,7 +251,7 @@
                 <span class="how-it-works-icon">❕</span>
                 <span class="how-it-works-title">How it works?</span>
                 <span class="how-it-works-desc">XP is earned by logging daily to the website, participating in the challenges, completing different tasks, attempting quizes, filling journals periodically, filling daily mood log etc.</span>
-            </div>
+                        </div>
             <div class="store-section-group">
                 <div class="store-section-header">
                     <span class="store-category-title">Avatars</span>
@@ -261,7 +261,7 @@
                     </div>
                 </div>
                 <div class="store-items-grid" id="avatar-items-grid"></div>
-            </div>
+                        </div>
             <div class="store-section-group">
                 <div class="store-section-header">
                     <span class="store-category-title">Virtual Pets</span>
@@ -271,6 +271,22 @@
                     </div>
                 </div>
                 <div class="store-items-grid" id="pet-items-grid"></div>
+                        </div>
+        </section>
+        <section class="meditations-section spa-section" id="meditations-section" style="display:none; min-height: 70vh;">
+            <div class="meditations-header-row">
+                <button class="back-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
+                <h2 class="meditations-title font-dancing">Meditations      Sanctuary</h2>
+                        </div>
+            <div class="meditations-layout">
+                <nav class="meditations-explorer" id="meditations-explorer">
+                    <!-- Explorer tree will go here -->
+                </nav>
+                <div class="meditations-content" id="meditations-content">
+                    <div class="meditations-placeholder">
+                        <p class="font-caveat" style="font-size:1.3rem; color:#888;">Select a meditation topic from the explorer to begin.</p>
+                    </div>
+                </div>
             </div>
         </section>
         <section class="logout-section card-centered-section" style="display:none;">
@@ -344,7 +360,7 @@
                     <div class="kf-icon">🎨</div>
                     <div class="kf-title-text">Customization & Rewards</div>
                     <div class="kf-desc">Spend points on avatar gear, new color themes, or adopt a virtual pet that "levels up" with you.</div>
-                </div>
+                    </div>
                 <div class="kf-card">
                     <div class="kf-icon">👥</div>
                     <div class="kf-title-text">Community & Support</div>
