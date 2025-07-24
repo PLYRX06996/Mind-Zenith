@@ -1919,7 +1919,6 @@ function renderJournalBooks() {
     `;
     grid.appendChild(card);
   });
-  
   // Add event listeners for buttons
   grid.querySelectorAll('.journal-book-action-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -1941,7 +1940,7 @@ function showNewEntryEditor(journalId, entryId = null) {
   const modal = document.getElementById('journal-new-entry-modal');
   const journal = journals.find(j => j.id === journalId);
   const entry = entryId ? journal.entries.find(e => e.id === entryId) : null;
-  
+
   modal.innerHTML = `
     <div class="entry-editor-container">
       <div class="entry-editor-header">
@@ -2024,7 +2023,7 @@ function showNewEntryEditor(journalId, entryId = null) {
       </div>
     </div>
   `;
-  
+
   modal.style.display = 'flex';
   setupEntryEditorListeners();
   updateWordCount();
@@ -2033,7 +2032,6 @@ function showNewEntryEditor(journalId, entryId = null) {
 function setupEntryEditorListeners() {
   const entryText = document.getElementById('entry-text');
   const wordCounter = document.getElementById('word-counter');
-  
   // Word count update
   entryText.addEventListener('input', updateWordCount);
   
@@ -2054,7 +2052,28 @@ function setupEntryEditorListeners() {
   
   // Options button
   document.getElementById('options-btn').addEventListener('click', showOptionsMenu);
-  
+
+  // Word count update
+  entryText.addEventListener('input', updateWordCount);
+
+  // Calendar button
+  document.getElementById('calendar-btn').addEventListener('click', showCalendarModal);
+
+  // Prompt button
+  document.getElementById('prompt-btn').addEventListener('click', showRandomPrompt);
+
+  // Tag button
+  document.getElementById('tag-btn').addEventListener('click', showTagModal);
+
+  // Image button
+  document.getElementById('image-btn').addEventListener('click', showImageModal);
+
+  // Format button
+  document.getElementById('format-btn').addEventListener('click', toggleFormattingToolbar);
+
+  // Options button
+  document.getElementById('options-btn').addEventListener('click', showOptionsMenu);
+
   // Journal selector
   document.getElementById('journal-selector').addEventListener('change', function() {
     currentJournalId = parseInt(this.value);
@@ -2137,6 +2156,89 @@ function renderCalendar() {
       dayElement.classList.add('today');
     }
     
+    grid.appendChild(dayElement);
+  }
+}
+
+function selectCalendarDay(element, day) {
+  document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('selected'));
+  element.classList.add('selected');
+  element.closest('.modal-overlay').selectedDay = day;
+}
+
+=======
+}
+
+function showRandomPrompt() {
+  const prompt = writingPrompts[Math.floor(Math.random() * writingPrompts.length)];
+  const container = document.getElementById('prompt-container');
+  container.innerHTML = `
+    <div class="prompt-box">
+      <span class="prompt-close" onclick="this.parentElement.remove()">&times;</span>
+      <strong>Writing Prompt:</strong> ${prompt}
+    </div>
+  `;
+}
+
+function toggleFormattingToolbar() {
+  const toolbar = document.getElementById('formatting-toolbar');
+  toolbar.classList.toggle('show');
+}
+
+function showCalendarModal() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h3 class="modal-title">Select Date</h3>
+      <div class="calendar-grid" id="calendar-grid"></div>
+      <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: flex-end;">
+        <button class="entry-action-btn entry-cancel-btn" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+        <button class="entry-action-btn entry-save-btn" onclick="selectDate()">Select</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const grid = document.getElementById('calendar-grid');
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+
+  // Add day headers
+  const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  dayHeaders.forEach(day => {
+    const header = document.createElement('div');
+    header.style.fontWeight = 'bold';
+    header.style.textAlign = 'center';
+    header.style.padding = '0.5rem';
+    header.textContent = day;
+    grid.appendChild(header);
+  });
+
+  // Add calendar days
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  // Empty cells for days before month starts
+  for (let i = 0; i < firstDay; i++) {
+    grid.appendChild(document.createElement('div'));
+  }
+
+  // Days of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayElement = document.createElement('div');
+    dayElement.className = 'calendar-day';
+    dayElement.textContent = day;
+    dayElement.onclick = () => selectCalendarDay(dayElement, day);
+
+    if (day === today.getDate()) {
+      dayElement.classList.add('today');
+    }
+
     grid.appendChild(dayElement);
   }
 }
@@ -2294,9 +2396,9 @@ function saveEntry() {
   const tags = Array.from(document.querySelectorAll('#entry-attachments .attachment-tag'))
     .filter(tag => tag.textContent.includes('🏷️'))
     .map(tag => tag.textContent.replace('🏷️ ', '').replace(' ×', '').trim());
-  
+
   const words = content.trim().split(/\s+/).length;
-  
+
   if (currentEntryId) {
     // Update existing entry
     const entry = journal.entries.find(e => e.id === currentEntryId);
@@ -2319,7 +2421,7 @@ function saveEntry() {
     };
     journal.entries.push(newEntry);
   }
-  
+
   closeEntryEditor();
   showJournalLanding();
 }
@@ -2333,7 +2435,7 @@ function closeEntryEditor() {
 function showViewEntries(journalId) {
   const modal = document.getElementById('journal-view-entries-modal');
   const journal = journals.find(j => j.id === journalId);
-  
+
   modal.innerHTML = `
     <div class="view-entries-container">
       <div class="view-entries-header">
@@ -2361,7 +2463,7 @@ function showViewEntries(journalId) {
       </div>
     </div>
   `;
-  
+
   modal.style.display = 'flex';
 }
 
@@ -2375,7 +2477,7 @@ function renderEntriesList(entries) {
       </div>
     `;
   }
-  
+
   return entries
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .map(entry => `
@@ -2407,7 +2509,7 @@ function filterEntries(journalId) {
     filteredEntries = filteredEntries.filter(entry => {
       const entryDate = new Date(entry.date);
       const entryDay = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate());
-      
+
       switch (dateFilter) {
         case 'today':
           return entryDay.getTime() === today.getTime();
@@ -2428,12 +2530,12 @@ function filterEntries(journalId) {
       }
     });
   }
-  
+
   // Star filtering
   if (starFilter === 'starred') {
     filteredEntries = filteredEntries.filter(entry => entry.starred);
   }
-  
+
   document.getElementById('entries-list').innerHTML = renderEntriesList(filteredEntries);
 }
 
@@ -2441,7 +2543,7 @@ function toggleStar(journalId, entryId) {
   const journal = journals.find(j => j.id === journalId);
   const entry = journal.entries.find(e => e.id === entryId);
   entry.starred = !entry.starred;
-  
+
   // Refresh the entries list
   const entriesList = document.getElementById('entries-list');
   if (entriesList) {
@@ -2534,8 +2636,67 @@ function createNewJournal() {
     id: journals.length + 1,
     title: title,
     entries: []
+
   };
   
+  journals.push(newJournal);
+  document.querySelector('.modal-overlay').remove();
+  renderJournalBooks();
+}
+
+function showTagManagement() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h3 class="modal-title">Manage Tags</h3>
+      <div class="tag-grid">
+        ${availableTags.map(tag => `
+          <div class="tag-option">${tag}</div>
+        `).join('')}
+      </div>
+      <div style="margin-top: 1rem;">
+        <input type="text" placeholder="Add new tag..." style="width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 6px;">
+      </div>
+      <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: flex-end;">
+        <button class="entry-action-btn entry-cancel-btn" onclick="this.closest('.modal-overlay').remove()">Close</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function showNewJournalModal() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h3 class="modal-title">Create New Journal</h3>
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Journal Title</label>
+        <input type="text" id="new-journal-title" placeholder="Enter journal title..." style="width: 100%; padding: 0.8rem; border: 1px solid #d1d5db; border-radius: 6px;">
+      </div>
+      <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: flex-end;">
+        <button class="entry-action-btn entry-cancel-btn" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+        <button class="entry-action-btn entry-save-btn" onclick="createNewJournal()">Create Journal</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function createNewJournal() {
+  const title = document.getElementById('new-journal-title').value.trim();
+  if (!title) {
+    alert('Please enter a journal title.');
+    return;
+  }
+
+  const newJournal = {
+    id: journals.length + 1,
+    title: title,
+    entries: []
+  };
   journals.push(newJournal);
   document.querySelector('.modal-overlay').remove();
   renderJournalBooks();
