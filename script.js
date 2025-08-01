@@ -2166,9 +2166,6 @@ function selectCalendarDay(element, day) {
   element.closest('.modal-overlay').selectedDay = day;
 }
 
-=======
-}
-
 function showRandomPrompt() {
   const prompt = writingPrompts[Math.floor(Math.random() * writingPrompts.length)];
   const container = document.getElementById('prompt-container');
