@@ -3335,12 +3335,6 @@ input:checked + .slider:before {
     flex-direction: column;
   }
 }
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-=======
 /* Journal Section Styling */
 .journal-top-bar {
     display: flex;
@@ -3829,8 +3823,311 @@ input:checked + .slider:before {
       padding: 1rem;
     }
   
-    .entry-actions {
-      flex-direction: column;
-    }
+      .entry-actions {
+    flex-direction: column;
   }
+}
+
+/* Daily Log Section Styles */
+.daily-log-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 2rem;
+}
+
+.daily-log-form {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(44,62,80,0.1);
+}
+
+.log-section-group {
+  margin-bottom: 2.5rem;
+}
+
+.log-section-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.8rem;
+  color: #6c5cff;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+}
+
+/* Mood Section */
+.mood-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mood-emoji-grid, .mood-faces-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.mood-emoji-btn, .mood-face-btn {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #e3e9f0;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mood-emoji-btn:hover, .mood-face-btn:hover {
+  border-color: #6c5cff;
+  transform: scale(1.1);
+}
+
+.mood-emoji-btn.selected, .mood-face-btn.selected {
+  border-color: #6c5cff;
+  background: #f0f0ff;
+  box-shadow: 0 4px 12px rgba(108,92,255,0.2);
+}
+
+/* Activity Checkboxes */
+.activity-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.activity-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 2px solid #e3e9f0;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.activity-checkbox:hover {
+  border-color: #6c5cff;
+  background: #f8f9fa;
+}
+
+.activity-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e3e9f0;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.activity-checkbox input[type="checkbox"]:checked + .checkmark {
+  background: #6c5cff;
+  border-color: #6c5cff;
+}
+
+.activity-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Health Metrics */
+.health-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.metric-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.metric-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.water-glasses, .sleep-hours {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.water-glass-btn, .sleep-hour-btn {
+  padding: 0.8rem 1rem;
+  border: 2px solid #e3e9f0;
+  border-radius: 0.8rem;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1.2rem;
+}
+
+.water-glass-btn:hover, .sleep-hour-btn:hover {
+  border-color: #6c5cff;
+  background: #f8f9fa;
+}
+
+.water-glass-btn.selected, .sleep-hour-btn.selected {
+  border-color: #6c5cff;
+  background: #f0f0ff;
+  color: #6c5cff;
+}
+
+/* Sliders */
+.stress-slider-container, .energy-slider-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stress-slider, .energy-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #e3e9f0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.stress-slider::-webkit-slider-thumb, .energy-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #6c5cff;
+  cursor: pointer;
+}
+
+.stress-labels, .energy-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.stress-value, .energy-value {
+  font-weight: bold;
+  color: #6c5cff;
+  font-size: 1.2rem;
+}
+
+/* Reflection Section */
+.reflection-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reflection-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.reflection-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 1rem;
+  border: 2px solid #e3e9f0;
+  border-radius: 0.8rem;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.reflection-textarea:focus {
+  outline: none;
+  border-color: #6c5cff;
+}
+
+/* Log Actions */
+.log-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #f0f0f0;
+}
+
+.log-save-btn, .log-clear-btn {
+  padding: 1rem 2rem;
+  border: 2px solid #e3e9f0;
+  border-radius: 0.8rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.log-save-btn {
+  background: #6c5cff;
+  color: #fff;
+  border-color: #6c5cff;
+}
+
+.log-save-btn:hover {
+  background: #5a4bff;
+  border-color: #5a4bff;
+  transform: translateY(-2px);
+}
+
+.log-clear-btn {
+  background: #fff;
+  color: #666;
+}
+
+.log-clear-btn:hover {
+  background: #f8f9fa;
+  border-color: #666;
+  color: #333;
+}
+
+/* Responsive Design for Daily Log */
+@media (max-width: 768px) {
+  .daily-log-container {
+    padding: 1rem;
+  }
+  
+  .daily-log-form {
+    padding: 1.5rem;
+  }
+  
+  .mood-emoji-grid, .mood-faces-grid {
+    justify-content: center;
+  }
+  
+  .activity-checkboxes {
+    grid-template-columns: 1fr;
+  }
+  
+  .water-glasses, .sleep-hours {
+    justify-content: center;
+  }
+  
+  .log-actions {
+    flex-direction: column;
+  }
+}
   

@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add Journal and Log sections to SPA hiding logic
     const journalSection = document.querySelector('.journal-section');
     const logSection = document.querySelector('.log-section');
+    const journalLanding = document.getElementById('journal-landing');
     const allSpaSections = [
         dashboardSection,
         ...mainContentSections,
@@ -80,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutSection,
         journalSection,
         logSection,
+        journalLanding,
         quizSection,
         quizPageSection
     ];
@@ -120,7 +122,19 @@ document.addEventListener('DOMContentLoaded', function() {
         if (journalItem) {
             journalItem.addEventListener('click', function(e) {
                 e.preventDefault();
+                hideAllSections();
                 showJournalLanding();
+                navLinks.forEach(link => link.classList.remove('active'));
+            });
+        }
+        
+        // NEW: Daily Log
+        const dailyLogItem = Array.from(activityZoneDropdown.querySelectorAll('.dropdown-item')).find(a => a.textContent.trim() === 'Daily Log');
+        if (dailyLogItem) {
+            dailyLogItem.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideAllSections();
+                showDailyLogSection();
                 navLinks.forEach(link => link.classList.remove('active'));
             });
         }
@@ -1865,14 +1879,25 @@ const sampleEntries = [
   }
 ];
 
-// Add sample entries to journals
-journals[0].entries = sampleEntries.filter(entry => entry.journalId === 1);
-journals[1].entries = sampleEntries.filter(entry => entry.journalId === 2);
-journals[2].entries = sampleEntries.filter(entry => entry.journalId === 3);
+// Load journals from localStorage if available
+const savedJournals = localStorage.getItem('journals');
+if (savedJournals) {
+  journals = JSON.parse(savedJournals);
+} else {
+  // Add sample entries to journals (only if no saved data)
+  journals[0].entries = sampleEntries.filter(entry => entry.journalId === 1);
+  journals[1].entries = sampleEntries.filter(entry => entry.journalId === 2);
+  journals[2].entries = sampleEntries.filter(entry => entry.journalId === 3);
+}
 
 let currentJournalId = null;
 let currentEntryId = null;
 let entryIdCounter = 4;
+
+// Undo/Redo functionality
+let undoStack = [];
+let redoStack = [];
+let isUndoRedoAction = false;
 
 const availableTags = [
   "gratitude", "reflection", "meditation", "mindfulness", "wellness", 
@@ -1897,6 +1922,289 @@ function showJournalLanding() {
   hideAllSections();
   document.getElementById('journal-landing').style.display = '';
   renderJournalBooks();
+}
+
+function showDailyLogSection() {
+  hideAllSections();
+  document.querySelector('.log-section').style.display = '';
+  renderDailyLogForm();
+}
+
+function renderDailyLogForm() {
+  const logSection = document.querySelector('.log-section');
+  logSection.innerHTML = `
+    <button class="back-dashboard-btn" type="button">&#8592; Back to Dashboard</button>
+    <h2 class="dashboard-title card-title">Daily Log</h2>
+    <div class="daily-log-container">
+      <div class="daily-log-form">
+        <div class="log-section-group">
+          <h3 class="log-section-title">Mood & Feelings</h3>
+          <div class="mood-section">
+            <div class="mood-emoji-grid">
+              <button class="mood-emoji-btn" data-mood="excellent">😊</button>
+              <button class="mood-emoji-btn" data-mood="good">🙂</button>
+              <button class="mood-emoji-btn" data-mood="okay">😐</button>
+              <button class="mood-emoji-btn" data-mood="bad">😔</button>
+              <button class="mood-emoji-btn" data-mood="terrible">😢</button>
+            </div>
+            <div class="mood-faces-grid">
+              <button class="mood-face-btn" data-face="happy">😀</button>
+              <button class="mood-face-btn" data-face="excited">🤩</button>
+              <button class="mood-face-btn" data-face="calm">😌</button>
+              <button class="mood-face-btn" data-face="sad">😞</button>
+              <button class="mood-face-btn" data-face="angry">😠</button>
+              <button class="mood-face-btn" data-face="anxious">😰</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="log-section-group">
+          <h3 class="log-section-title">Daily Activities</h3>
+          <div class="activity-checkboxes">
+            <label class="activity-checkbox">
+              <input type="checkbox" name="meditation">
+              <span class="checkmark"></span>
+              Meditation
+            </label>
+            <label class="activity-checkbox">
+              <input type="checkbox" name="exercise">
+              <span class="checkmark"></span>
+              Exercise
+            </label>
+            <label class="activity-checkbox">
+              <input type="checkbox" name="reading">
+              <span class="checkmark"></span>
+              Reading
+            </label>
+            <label class="activity-checkbox">
+              <input type="checkbox" name="social">
+              <span class="checkmark"></span>
+              Social Time
+            </label>
+            <label class="activity-checkbox">
+              <input type="checkbox" name="creative">
+              <span class="checkmark"></span>
+              Creative Activity
+            </label>
+            <label class="activity-checkbox">
+              <input type="checkbox" name="outdoor">
+              <span class="checkmark"></span>
+              Outdoor Time
+            </label>
+          </div>
+        </div>
+        
+        <div class="log-section-group">
+          <h3 class="log-section-title">Health & Wellness</h3>
+          <div class="health-metrics">
+            <div class="metric-row">
+              <label class="metric-label">Water Intake (glasses)</label>
+              <div class="water-glasses">
+                <button class="water-glass-btn" data-glasses="1">🥤</button>
+                <button class="water-glass-btn" data-glasses="2">🥤</button>
+                <button class="water-glass-btn" data-glasses="3">🥤</button>
+                <button class="water-glass-btn" data-glasses="4">🥤</button>
+                <button class="water-glass-btn" data-glasses="5">🥤</button>
+                <button class="water-glass-btn" data-glasses="6">🥤</button>
+                <button class="water-glass-btn" data-glasses="7">🥤</button>
+                <button class="water-glass-btn" data-glasses="8">🥤</button>
+              </div>
+            </div>
+            
+            <div class="metric-row">
+              <label class="metric-label">Stress Level</label>
+              <div class="stress-slider-container">
+                <input type="range" id="stress-slider" min="1" max="10" value="5" class="stress-slider">
+                <div class="stress-labels">
+                  <span>Low</span>
+                  <span>High</span>
+                </div>
+                <span class="stress-value" id="stress-value">5</span>
+              </div>
+            </div>
+            
+            <div class="metric-row">
+              <label class="metric-label">Energy Level</label>
+              <div class="energy-slider-container">
+                <input type="range" id="energy-slider" min="1" max="10" value="5" class="energy-slider">
+                <div class="energy-labels">
+                  <span>Low</span>
+                  <span>High</span>
+                </div>
+                <span class="energy-value" id="energy-value">5</span>
+              </div>
+            </div>
+            
+            <div class="metric-row">
+              <label class="metric-label">Sleep Quality (hours)</label>
+              <div class="sleep-hours">
+                <button class="sleep-hour-btn" data-hours="4">4h</button>
+                <button class="sleep-hour-btn" data-hours="5">5h</button>
+                <button class="sleep-hour-btn" data-hours="6">6h</button>
+                <button class="sleep-hour-btn" data-hours="7">7h</button>
+                <button class="sleep-hour-btn" data-hours="8">8h</button>
+                <button class="sleep-hour-btn" data-hours="9">9h</button>
+                <button class="sleep-hour-btn" data-hours="10">10h</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="log-section-group">
+          <h3 class="log-section-title">Daily Reflection</h3>
+          <div class="reflection-section">
+            <label class="reflection-label">What made you happy today?</label>
+            <textarea class="reflection-textarea" id="happiness-text" placeholder="Write about what brought you joy..."></textarea>
+            
+            <label class="reflection-label">What challenged you today?</label>
+            <textarea class="reflection-textarea" id="challenge-text" placeholder="Write about any difficulties you faced..."></textarea>
+            
+            <label class="reflection-label">What are you grateful for?</label>
+            <textarea class="reflection-textarea" id="gratitude-text" placeholder="Write about what you're thankful for..."></textarea>
+            
+            <label class="reflection-label">Tomorrow's goal</label>
+            <textarea class="reflection-textarea" id="goal-text" placeholder="What would you like to accomplish tomorrow?"></textarea>
+          </div>
+        </div>
+        
+        <div class="log-actions">
+          <button class="log-save-btn" onclick="saveDailyLog()">Save Daily Log</button>
+          <button class="log-clear-btn" onclick="clearDailyLog()">Clear Form</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  setupDailyLogListeners();
+}
+
+function setupDailyLogListeners() {
+  // Mood emoji buttons
+  document.querySelectorAll('.mood-emoji-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.mood-emoji-btn').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+  
+  // Mood face buttons
+  document.querySelectorAll('.mood-face-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.mood-face-btn').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+  
+  // Water glass buttons
+  document.querySelectorAll('.water-glass-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const glasses = parseInt(this.getAttribute('data-glasses'));
+      document.querySelectorAll('.water-glass-btn').forEach(b => b.classList.remove('selected'));
+      for (let i = 0; i < glasses; i++) {
+        document.querySelectorAll('.water-glass-btn')[i].classList.add('selected');
+      }
+    });
+  });
+  
+  // Sleep hour buttons
+  document.querySelectorAll('.sleep-hour-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.sleep-hour-btn').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+  
+  // Stress slider
+  const stressSlider = document.getElementById('stress-slider');
+  const stressValue = document.getElementById('stress-value');
+  stressSlider.addEventListener('input', function() {
+    stressValue.textContent = this.value;
+  });
+  
+  // Energy slider
+  const energySlider = document.getElementById('energy-slider');
+  const energyValue = document.getElementById('energy-value');
+  energySlider.addEventListener('input', function() {
+    energyValue.textContent = this.value;
+  });
+}
+
+function saveDailyLog() {
+  const logData = {
+    date: new Date().toISOString().split('T')[0],
+    mood: document.querySelector('.mood-emoji-btn.selected')?.getAttribute('data-mood') || '',
+    face: document.querySelector('.mood-face-btn.selected')?.getAttribute('data-face') || '',
+    activities: {
+      meditation: document.querySelector('input[name="meditation"]').checked,
+      exercise: document.querySelector('input[name="exercise"]').checked,
+      reading: document.querySelector('input[name="reading"]').checked,
+      social: document.querySelector('input[name="social"]').checked,
+      creative: document.querySelector('input[name="creative"]').checked,
+      outdoor: document.querySelector('input[name="outdoor"]').checked
+    },
+    waterGlasses: document.querySelectorAll('.water-glass-btn.selected').length,
+    stressLevel: parseInt(document.getElementById('stress-slider').value),
+    energyLevel: parseInt(document.getElementById('energy-slider').value),
+    sleepHours: document.querySelector('.sleep-hour-btn.selected')?.getAttribute('data-hours') || '',
+    happiness: document.getElementById('happiness-text').value,
+    challenge: document.getElementById('challenge-text').value,
+    gratitude: document.getElementById('gratitude-text').value,
+    goal: document.getElementById('goal-text').value
+  };
+  
+  // Save to localStorage (in a real app, this would go to a database)
+  const existingLogs = JSON.parse(localStorage.getItem('dailyLogs') || '[]');
+  existingLogs.push(logData);
+  localStorage.setItem('dailyLogs', JSON.stringify(existingLogs));
+  
+  // Show success message
+  alert('Daily log saved successfully!');
+}
+
+function clearDailyLog() {
+  if (confirm('Are you sure you want to clear the form? This action cannot be undone.')) {
+    try {
+      // Clear all selections
+      document.querySelectorAll('.mood-emoji-btn, .mood-face-btn, .water-glass-btn, .sleep-hour-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      // Clear checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      
+      // Reset sliders
+      const stressSlider = document.getElementById('stress-slider');
+      const energySlider = document.getElementById('energy-slider');
+      const stressValue = document.getElementById('stress-value');
+      const energyValue = document.getElementById('energy-value');
+      
+      if (stressSlider && stressValue) {
+        stressSlider.value = 5;
+        stressValue.textContent = '5';
+      }
+      
+      if (energySlider && energyValue) {
+        energySlider.value = 5;
+        energyValue.textContent = '5';
+      }
+      
+      // Clear textareas
+      const textareas = ['happiness-text', 'challenge-text', 'gratitude-text', 'goal-text'];
+      textareas.forEach(id => {
+        const textarea = document.getElementById(id);
+        if (textarea) {
+          textarea.value = '';
+        }
+      });
+      
+      alert('Form cleared successfully!');
+    } catch (error) {
+      console.error('Error clearing form:', error);
+      alert('Error clearing form. Please try again.');
+    }
+  }
 }
 
 function renderJournalBooks() {
@@ -1957,7 +2265,7 @@ function showNewEntryEditor(journalId, entryId = null) {
         <button class="toolbar-btn" id="prompt-btn">💡 Prompt</button>
         <button class="toolbar-btn" id="tag-btn">🏷️ Tags</button>
         <button class="toolbar-btn" id="image-btn">📎 Image</button>
-        <button class="toolbar-btn" id="format-btn" style="position: relative;">A Format</button>
+        <button class="toolbar-btn" id="format-btn" style="position: relative;">Text Format</button>
         <button class="toolbar-btn" id="options-btn">⋯ Options</button>
         <div class="word-counter" id="word-counter">0 words</div>
       </div>
@@ -2032,11 +2340,26 @@ function showNewEntryEditor(journalId, entryId = null) {
 function setupEntryEditorListeners() {
   const entryText = document.getElementById('entry-text');
   const wordCounter = document.getElementById('word-counter');
+  
   // Word count update
   entryText.addEventListener('input', updateWordCount);
   
+  // Undo/Redo functionality
+  entryText.addEventListener('input', function() {
+    if (!isUndoRedoAction) {
+      saveToUndoStack(entryText.value);
+      redoStack = []; // Clear redo stack when new input is made
+    }
+  });
+  
   // Calendar button
   document.getElementById('calendar-btn').addEventListener('click', showCalendarModal);
+  
+  // Undo button
+  document.getElementById('undo-btn').addEventListener('click', undoAction);
+  
+  // Redo button
+  document.getElementById('redo-btn').addEventListener('click', redoAction);
   
   // Prompt button
   document.getElementById('prompt-btn').addEventListener('click', showRandomPrompt);
@@ -2050,33 +2373,20 @@ function setupEntryEditorListeners() {
   // Format button
   document.getElementById('format-btn').addEventListener('click', toggleFormattingToolbar);
   
-  // Options button
-  document.getElementById('options-btn').addEventListener('click', showOptionsMenu);
-
-  // Word count update
-  entryText.addEventListener('input', updateWordCount);
-
-  // Calendar button
-  document.getElementById('calendar-btn').addEventListener('click', showCalendarModal);
-
-  // Prompt button
-  document.getElementById('prompt-btn').addEventListener('click', showRandomPrompt);
-
-  // Tag button
-  document.getElementById('tag-btn').addEventListener('click', showTagModal);
-
-  // Image button
-  document.getElementById('image-btn').addEventListener('click', showImageModal);
-
-  // Format button
-  document.getElementById('format-btn').addEventListener('click', toggleFormattingToolbar);
-
   // Options button
   document.getElementById('options-btn').addEventListener('click', showOptionsMenu);
 
   // Journal selector
   document.getElementById('journal-selector').addEventListener('change', function() {
     currentJournalId = parseInt(this.value);
+  });
+  
+  // Formatting toolbar buttons
+  document.querySelectorAll('.format-btn[data-format]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const format = this.getAttribute('data-format');
+      formatText(format);
+    });
   });
 }
 
@@ -2086,6 +2396,106 @@ function updateWordCount() {
   document.getElementById('word-counter').textContent = `${words} words`;
 }
 
+function saveToUndoStack(text) {
+  undoStack.push(text);
+  if (undoStack.length > 50) { // Limit stack size
+    undoStack.shift();
+  }
+}
+
+function undoAction() {
+  const entryText = document.getElementById('entry-text');
+  if (undoStack.length > 0) {
+    const currentText = entryText.value;
+    redoStack.push(currentText);
+    const previousText = undoStack.pop();
+    isUndoRedoAction = true;
+    entryText.value = previousText;
+    updateWordCount();
+    isUndoRedoAction = false;
+  }
+}
+
+function redoAction() {
+  const entryText = document.getElementById('entry-text');
+  if (redoStack.length > 0) {
+    const currentText = entryText.value;
+    undoStack.push(currentText);
+    const nextText = redoStack.pop();
+    isUndoRedoAction = true;
+    entryText.value = nextText;
+    updateWordCount();
+    isUndoRedoAction = false;
+  }
+}
+
+function formatText(format) {
+  const entryText = document.getElementById('entry-text');
+  const start = entryText.selectionStart;
+  const end = entryText.selectionEnd;
+  const selectedText = entryText.value.substring(start, end);
+  const beforeText = entryText.value.substring(0, start);
+  const afterText = entryText.value.substring(end);
+  
+  let formattedText = '';
+  switch(format) {
+    case 'bold':
+      formattedText = `**${selectedText}**`;
+      break;
+    case 'italic':
+      formattedText = `*${selectedText}*`;
+      break;
+    case 'underline':
+      formattedText = `__${selectedText}__`;
+      break;
+    case 'strikethrough':
+      formattedText = `~~${selectedText}~~`;
+      break;
+    case 'h1':
+      formattedText = `# ${selectedText}`;
+      break;
+    case 'h2':
+      formattedText = `## ${selectedText}`;
+      break;
+    case 'h3':
+      formattedText = `### ${selectedText}`;
+      break;
+    case 'list':
+      formattedText = `• ${selectedText}`;
+      break;
+    case 'numbered':
+      formattedText = `1. ${selectedText}`;
+      break;
+    case 'quote':
+      formattedText = `> ${selectedText}`;
+      break;
+    case 'code':
+      formattedText = `\`${selectedText}\``;
+      break;
+    case 'left':
+      formattedText = `<div style="text-align: left;">${selectedText}</div>`;
+      break;
+    case 'center':
+      formattedText = `<div style="text-align: center;">${selectedText}</div>`;
+      break;
+    case 'right':
+      formattedText = `<div style="text-align: right;">${selectedText}</div>`;
+      break;
+    default:
+      formattedText = selectedText;
+  }
+  
+  const newText = beforeText + formattedText + afterText;
+  entryText.value = newText;
+  
+  // Restore cursor position
+  entryText.setSelectionRange(start, start + formattedText.length);
+  entryText.focus();
+  
+  // Update word count
+  updateWordCount();
+}
+
 function showRandomPrompt() {
   const prompt = writingPrompts[Math.floor(Math.random() * writingPrompts.length)];
   const container = document.getElementById('prompt-container');
@@ -2108,7 +2518,9 @@ function showCalendarModal() {
   modal.innerHTML = `
     <div class="modal-content">
       <h3 class="modal-title">Select Date</h3>
-      <div class="calendar-grid" id="calendar-grid"></div>
+      <div style="margin: 1rem 0;">
+        <input type="date" id="date-picker" class="date-input" style="width: 100%; padding: 0.8rem; border: 2px solid #e3e9f0; border-radius: 0.8rem; font-size: 1rem; outline: none;" value="${new Date().toISOString().split('T')[0]}">
+      </div>
       <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: flex-end;">
         <button class="entry-action-btn entry-cancel-btn" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
         <button class="entry-action-btn entry-save-btn" onclick="selectDate()">Select</button>
@@ -2116,7 +2528,6 @@ function showCalendarModal() {
     </div>
   `;
   document.body.appendChild(modal);
-  renderCalendar();
 }
 
 function renderCalendar() {
@@ -2188,7 +2599,9 @@ function showCalendarModal() {
   modal.innerHTML = `
     <div class="modal-content">
       <h3 class="modal-title">Select Date</h3>
-      <div class="calendar-grid" id="calendar-grid"></div>
+      <div style="margin: 1rem 0;">
+        <input type="date" id="date-picker" class="date-input" style="width: 100%; padding: 0.8rem; border: 2px solid #e3e9f0; border-radius: 0.8rem; font-size: 1rem; outline: none;" value="${new Date().toISOString().split('T')[0]}">
+      </div>
       <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: flex-end;">
         <button class="entry-action-btn entry-cancel-btn" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
         <button class="entry-action-btn entry-save-btn" onclick="selectDate()">Select</button>
@@ -2196,65 +2609,15 @@ function showCalendarModal() {
     </div>
   `;
   document.body.appendChild(modal);
-  renderCalendar();
 }
 
-function renderCalendar() {
-  const grid = document.getElementById('calendar-grid');
-  const today = new Date();
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
 
-  // Add day headers
-  const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  dayHeaders.forEach(day => {
-    const header = document.createElement('div');
-    header.style.fontWeight = 'bold';
-    header.style.textAlign = 'center';
-    header.style.padding = '0.5rem';
-    header.textContent = day;
-    grid.appendChild(header);
-  });
-
-  // Add calendar days
-  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-  // Empty cells for days before month starts
-  for (let i = 0; i < firstDay; i++) {
-    grid.appendChild(document.createElement('div'));
-  }
-
-  // Days of the month
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dayElement = document.createElement('div');
-    dayElement.className = 'calendar-day';
-    dayElement.textContent = day;
-    dayElement.onclick = () => selectCalendarDay(dayElement, day);
-
-    if (day === today.getDate()) {
-      dayElement.classList.add('today');
-    }
-
-    grid.appendChild(dayElement);
-  }
-}
-
-function selectCalendarDay(element, day) {
-  document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('selected'));
-  element.classList.add('selected');
-  element.closest('.modal-overlay').selectedDay = day;
-}
 
 function selectDate() {
-  const modal = document.querySelector('.modal-overlay');
-  const selectedDay = modal.selectedDay;
-  if (selectedDay) {
-    const today = new Date();
-    const selectedDate = new Date(today.getFullYear(), today.getMonth(), selectedDay);
-    document.getElementById('entry-date').textContent = formatDate(selectedDate);
-  }
-  modal.remove();
+  const datePicker = document.getElementById('date-picker');
+  const selectedDate = new Date(datePicker.value);
+  document.getElementById('entry-date').textContent = formatDate(selectedDate);
+  document.querySelector('.modal-overlay').remove();
 }
 
 function showTagModal() {
@@ -2406,7 +2769,7 @@ function saveEntry() {
   } else {
     // Create new entry
     const newEntry = {
-      id: entryIdCounter++,
+      id: Date.now(), // Use timestamp for unique ID
       journalId: currentJournalId,
       title: title,
       content: content,
@@ -2419,8 +2782,14 @@ function saveEntry() {
     journal.entries.push(newEntry);
   }
 
+  // Save to localStorage
+  localStorage.setItem('journals', JSON.stringify(journals));
+
   closeEntryEditor();
   showJournalLanding();
+  
+  // Show success message
+  alert('Entry saved successfully!');
 }
 
 function closeEntryEditor() {
@@ -2540,6 +2909,9 @@ function toggleStar(journalId, entryId) {
   const journal = journals.find(j => j.id === journalId);
   const entry = journal.entries.find(e => e.id === entryId);
   entry.starred = !entry.starred;
+
+  // Save to localStorage
+  localStorage.setItem('journals', JSON.stringify(journals));
 
   // Refresh the entries list
   const entriesList = document.getElementById('entries-list');
@@ -2690,13 +3062,21 @@ function createNewJournal() {
   }
 
   const newJournal = {
-    id: journals.length + 1,
+    id: Date.now(), // Use timestamp for unique ID
     title: title,
     entries: []
   };
+  
   journals.push(newJournal);
+  
+  // Save to localStorage
+  localStorage.setItem('journals', JSON.stringify(journals));
+  
   document.querySelector('.modal-overlay').remove();
   renderJournalBooks();
+  
+  // Show success message
+  alert('Journal created successfully!');
 }
 
     // --- Meditations Explorer SPA Logic ---
