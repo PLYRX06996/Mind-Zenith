@@ -1,3 +1,165 @@
+// API Configuration and Integration
+const API_BASE_URL = 'http://localhost:5000/api';
+
+// Global state management
+let currentUser = null;
+let authToken = localStorage.getItem('authToken');
+
+// API Helper Functions
+const api = {
+    async request(endpoint, options = {}) {
+        const url = `${API_BASE_URL}${endpoint}`;
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            },
+            ...options
+        };
+
+        if (authToken) {
+            config.headers['Authorization'] = `Bearer ${authToken}`;
+        }
+
+        try {
+            const response = await fetch(url, config);
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'API request failed');
+            }
+            
+            return data;
+        } catch (error) {
+            console.error('API Error:', error);
+            throw error;
+        }
+    },
+
+    // Authentication APIs
+    async register(userData) {
+        return await this.request('/auth/register', {
+            method: 'POST',
+            body: JSON.stringify(userData)
+        });
+    },
+
+    async login(credentials) {
+        return await this.request('/auth/login', {
+            method: 'POST',
+            body: JSON.stringify(credentials)
+        });
+    },
+
+    async getCurrentUser() {
+        return await this.request('/auth/me');
+    },
+
+    async updateProfile(profileData) {
+        return await this.request('/auth/profile', {
+            method: 'PUT',
+            body: JSON.stringify(profileData)
+        });
+    },
+
+    // Journal APIs
+    async getJournals() {
+        return await this.request('/journals');
+    },
+
+    async createJournal(journalData) {
+        return await this.request('/journals', {
+            method: 'POST',
+            body: JSON.stringify(journalData)
+        });
+    },
+
+    async getJournalEntries(journalId) {
+        return await this.request(`/journals/${journalId}/entries`);
+    },
+
+    async createJournalEntry(journalId, entryData) {
+        return await this.request(`/journals/${journalId}/entries`, {
+            method: 'POST',
+            body: JSON.stringify(entryData)
+        });
+    },
+
+    async updateJournalEntry(entryId, entryData) {
+        return await this.request(`/journals/entries/${entryId}`, {
+            method: 'PUT',
+            body: JSON.stringify(entryData)
+        });
+    },
+
+    async deleteJournalEntry(entryId) {
+        return await this.request(`/journals/entries/${entryId}`, {
+            method: 'DELETE'
+        });
+    },
+
+    // Daily Log APIs
+    async getDailyLogs() {
+        return await this.request('/daily-logs');
+    },
+
+    async createDailyLog(logData) {
+        return await this.request('/daily-logs', {
+            method: 'POST',
+            body: JSON.stringify(logData)
+        });
+    },
+
+    async updateDailyLog(logId, logData) {
+        return await this.request(`/daily-logs/${logId}`, {
+            method: 'PUT',
+            body: JSON.stringify(logData)
+        });
+    },
+
+    // Quiz APIs
+    async getQuizzes() {
+        return await this.request('/quizzes');
+    },
+
+    async submitQuiz(quizId, answers) {
+        return await this.request(`/quizzes/${quizId}/submit`, {
+            method: 'POST',
+            body: JSON.stringify(answers)
+        });
+    }
+};
+
+// Authentication Management
+const auth = {
+    setToken(token) {
+        authToken = token;
+        localStorage.setItem('authToken', token);
+    },
+
+    clearToken() {
+        authToken = null;
+        localStorage.removeItem('authToken');
+        currentUser = null;
+    },
+
+    isAuthenticated() {
+        return !!authToken;
+    },
+
+    async checkAuth() {
+        if (!authToken) return false;
+        
+        try {
+            currentUser = await api.getCurrentUser();
+            return true;
+        } catch (error) {
+            this.clearToken();
+            return false;
+        }
+    }
+};
+
 // Image modal logic for all clickable images
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -727,6 +889,73 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoutSection && logoutSection.style.display !== 'none') {
         renderAuthPanels();
     }
+
+    // --- Authentication Form Event Listeners ---
+    function setupAuthListeners() {
+        // Sign In Form
+        const signinForm = document.getElementById('auth-signin-form');
+        if (signinForm) {
+            signinForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const email = signinForm.querySelector('input[type="email"]').value;
+                const password = signinForm.querySelector('input[type="password"]').value;
+                
+                try {
+                    const response = await api.login({ email, password });
+                    auth.setToken(response.token);
+                    currentUser = response.user;
+                    
+                    // Show success message
+                    alert('✅ Login successful! Welcome back!');
+                    
+                    // Redirect to dashboard
+                    showDashboard();
+                    
+                } catch (error) {
+                    alert(`❌ Login failed: ${error.message}`);
+                }
+            });
+        }
+
+        // Sign Up Form
+        const signupForm = document.getElementById('auth-signup-form');
+        if (signupForm) {
+            signupForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const name = signupForm.querySelector('input[type="text"]').value;
+                const email = signupForm.querySelector('input[type="email"]').value;
+                const password = signupForm.querySelector('input[type="password"]').value;
+                
+                try {
+                    const response = await api.register({ 
+                        email, 
+                        password, 
+                        displayName: name 
+                    });
+                    auth.setToken(response.token);
+                    currentUser = response.user;
+                    
+                    // Show success message
+                    alert('✅ Registration successful! Welcome to Mind Zenith!');
+                    
+                    // Redirect to dashboard
+                    showDashboard();
+                    
+                } catch (error) {
+                    alert(`❌ Registration failed: ${error.message}`);
+                }
+            });
+        }
+    }
+
+    // Setup auth listeners when auth panels are rendered
+    const originalRenderAuthPanels = renderAuthPanels;
+    renderAuthPanels = function() {
+        originalRenderAuthPanels();
+        setTimeout(setupAuthListeners, 100); // Small delay to ensure DOM is ready
+    };
 
     // --- Achievements Section: Render All Badges ---
     const badgeFilenames = [
