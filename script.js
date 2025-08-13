@@ -924,15 +924,15 @@ document.addEventListener('DOMContentLoaded', function() {
             signupForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                const name = signupForm.querySelector('input[type="text"]').value;
+                const displayName = signupForm.querySelector('input[type="text"]').value;
                 const email = signupForm.querySelector('input[type="email"]').value;
                 const password = signupForm.querySelector('input[type="password"]').value;
                 
                 try {
                     const response = await api.register({ 
+                        displayName, 
                         email, 
-                        password, 
-                        displayName: name 
+                        password 
                     });
                     auth.setToken(response.token);
                     currentUser = response.user;
@@ -2757,6 +2757,15 @@ function showCalendarModal() {
     </div>
   `;
   document.body.appendChild(modal);
+}
+
+function addModalEventListeners(modal, selectors) {
+  for (const selector in selectors) {
+    const element = modal.querySelector(selector);
+    if (element) {
+      element.addEventListener('click', selectors[selector]);
+    }
+  }
 }
 
 function renderCalendar() {
